@@ -1,5 +1,7 @@
 package dsemikin.wellfedcat;
 
-public class Menu {
+import java.util.ArrayList;
+
+public class Menu extends ArrayList<DayMenu> {
 
 }

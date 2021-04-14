@@ -21,4 +21,67 @@ public class DayMenu {
         maybeDate = Optional.empty();
         maybeDayOfWeek = Optional.empty();
     }
+
+    public DayMenu(final LocalDate date) {
+        this();
+        setDate(date);
+    }
+
+    public DayMenu(final DayOfWeek dayOfWeek) {
+        this();
+        setDayOfWeek(dayOfWeek);
+    }
+
+    /** Sets `date` of this object to given `date` and `dayOfWeek` of this object to corresponding day of week. */
+    public void setDate(final LocalDate date) {
+        maybeDate = Optional.of(date);
+        maybeDayOfWeek = Optional.of(date.getDayOfWeek());
+    }
+
+    /** Remove definition of date and sets day of week to given value. */
+    public void setDayOfWeek(final DayOfWeek dayOfWeek) {
+        maybeDate = Optional.empty();
+        maybeDayOfWeek = Optional.of(dayOfWeek);
+    }
+
+    public Optional<DayOfWeek> getMaybeDayOfWeek() {
+        return maybeDayOfWeek;
+    }
+
+    public Optional<LocalDate> getMaybeDate() {
+        return maybeDate;
+    }
+
+    public void resetDate() {
+        maybeDate = Optional.empty();
+    }
+
+    public void resetDateAndDayOfWeek() {
+        maybeDate = Optional.empty();
+        maybeDayOfWeek = Optional.empty();
+    }
+
+    public List<Dish> getBreakfast() {
+        return breakfast;
+    }
+
+    public List<Dish> getLunch() {
+        return lunch;
+    }
+
+    public List<Dish> getSupper() {
+        return supper;
+    }
+
+    public void setBreakfast(final List<Dish> breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public void setLunch(final List<Dish> lunch) {
+        this.lunch = lunch;
+    }
+
+    public void setSupper(List<Dish> supper) {
+        this.supper = supper;
+    }
 }
