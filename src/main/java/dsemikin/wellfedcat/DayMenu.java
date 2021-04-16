@@ -3,6 +3,7 @@ package dsemikin.wellfedcat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,11 +78,27 @@ public class DayMenu {
         this.breakfast = breakfast;
     }
 
+    public void setBreakfast(final Dish breakfastDish) {
+        breakfast = singletonArrayList(breakfastDish);
+    }
+
     public void setLunch(final List<Dish> lunch) {
         this.lunch = lunch;
     }
 
+    public void setLunch(final Dish lunchDish) {
+        lunch = singletonArrayList(lunchDish);
+    }
+
     public void setSupper(List<Dish> supper) {
         this.supper = supper;
+    }
+
+    public void setSupper(final Dish supperDish) {
+        supper = singletonArrayList(supperDish);
+    }
+
+    private ArrayList<Dish> singletonArrayList(final Dish dish) {
+        return new ArrayList<>(Collections.singletonList(dish));
     }
 }
