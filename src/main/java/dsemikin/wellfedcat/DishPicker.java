@@ -54,7 +54,7 @@ public class DishPicker {
             dishHistory.remove(0);
         }
         if (dishHistory.size() >= DISH_HISTORY_DEPTH) {
-            throw new IllegalStateException("Dish history size must not exceed DISH_HISTORY_DEPTH.");
+            throw new IllegalStateException("Internal Error. Dish history size must not exceed DISH_HISTORY_DEPTH.");
         }
     }
 }

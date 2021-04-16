@@ -3,7 +3,7 @@ package dsemikin.wellfedcat;
 public class DishStoreProvider {
 
     public static DishStore getDishStore() {
-        return new DishStoreInMemory();
+        return createAndInitializeInMemoryDishStore();
     }
 
     private static DishStoreInMemory createAndInitializeInMemoryDishStore() {
