@@ -19,9 +19,9 @@ public class MenuManager {
 
     public void fillMenu(final Menu menu) {
         for (DayMenu dayMenu : menu) {
-            dayMenu.setBreakfast(pickNextDish());
-            dayMenu.setLunch(pickNextDish());
-            dayMenu.setSupper(pickNextDish());
+            dayMenu.setBreakfast(pickNextDish(MealTime.BREAKFAST));
+            dayMenu.setLunch(pickNextDish(MealTime.LUNCH));
+            dayMenu.setSupper(pickNextDish(MealTime.SUPPER));
         }
     }
 
@@ -60,7 +60,7 @@ public class MenuManager {
         return generateMenu(startDay, 7);
     }
 
-    private Dish pickNextDish() {
-        return dishPicker.pickNextDishAndUpdateHistory();
+    private Dish pickNextDish(final MealTime mealTime) {
+        return dishPicker.pickNextDishAndUpdateHistory(mealTime);
     }
 }

@@ -18,25 +18,44 @@ public class DishPicker {
         dishHistory = new LinkedList<>(); // TODO: It should be possible to restore it from some storage
     }
 
-    public Dish pickNextDish() {
-        return allDishes.get(pickNextDishIdx());
+    public Dish pickNextDish(final MealTime mealTime) {
+        return allDishes.get(pickNextDishIdx(mealTime));
     }
 
-    public Dish pickNextDishAndUpdateHistory() {
-        int pickedDishIdx = pickNextDishIdx();
+    public Dish pickNextDishAndUpdateHistory(final MealTime mealTime) {
+        int pickedDishIdx = pickNextDishIdx(mealTime);
         final Dish pickedDish = allDishes.get(pickedDishIdx);
         updateDishesHistory(pickedDishIdx);
         return pickedDish;
     }
 
-    private int pickNextDishIdx() {
-        final List<Double> probabilityWeightsOfDishes = generateProbabilityWeightsOfDishes();
+    private int pickNextDishIdx(final MealTime mealTime) {
+        final List<Double> probabilityWeightsOfDishes = generateProbabilityWeightsOfDishes(mealTime);
         return ProbabilityObjectPicker.pick(probabilityWeightsOfDishes);
     }
 
-    private List<Double> generateProbabilityWeightsOfDishes() {
+    private List<Double> generateProbabilityWeightsOfDishes(final MealTime mealTime) {
         //noinspection Convert2Diamond
         var probabilityWeights = new ArrayList<Double>(Collections.nCopies(allDishes.size(), 1.0D));
+        updateProbabilityWeightsBasedOnHistory(probabilityWeights);
+        updateProbabilityWeightsBasedOnMealTime(probabilityWeights, mealTime);
+        return probabilityWeights;
+    }
+
+    private void updateProbabilityWeightsBasedOnMealTime(
+            final List<Double> probabilityWeights,
+            final MealTime mealTime
+    ) {
+        for (int dishNum = 0; dishNum < allDishes.size(); ++dishNum) {
+            final Dish dish = allDishes.get(dishNum);
+            if (!dish.suitableForMealTimes().contains(mealTime)) {
+                probabilityWeights.set(dishNum, 0.0);
+            }
+        }
+    }
+
+    /** parameter `probabilityList` is "inout". The method modifies it in place. */
+    private void updateProbabilityWeightsBasedOnHistory(final List<Double> probabilityWeights) {
         for (int kk = 0; kk < dishHistory.size(); kk++) {
             final int dishIdx = dishHistory.get(kk);
             final double epsilon = 0.01; // we don't want, that latest dish has 0 probability.
@@ -45,7 +64,6 @@ public class DishPicker {
             final double newProbabilityWeight = probabilityWeightMultiplier * currentProbabilityWeight;
             probabilityWeights.set(dishIdx, newProbabilityWeight);
         }
-        return probabilityWeights;
     }
 
     public void updateDishesHistory(final int latestDishIdx) {
