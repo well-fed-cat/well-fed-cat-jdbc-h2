@@ -1,11 +1,18 @@
 package dsemikin.wellfedcat;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DishStoreInMemory implements DishStore {
+public class DishStoreInMemory
+        implements DishStore, Serializable
+{
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final Map<String, Dish> dishes;
 

@@ -1,16 +1,23 @@
 package dsemikin.wellfedcat;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 
 public class DishStoreProvider {
 
     public static DishStore getDishStore() {
-        return createAndInitializeInMemoryDishStore();
+        final DishStoreInMemory dishStore = new DishStoreInMemory();
+        return initializeDishStoreWithSampleData(dishStore);
     }
 
-    private static DishStoreInMemory createAndInitializeInMemoryDishStore() {
-        final DishStoreInMemory dishStore = new DishStoreInMemory();
+    public static DishStore getDishStoreSimpleFileAndFillWithSampleData(final Path dishStoreFile) {
+        DishStoreSimpleFile dishStore = new DishStoreSimpleFile(dishStoreFile);
+        return initializeDishStoreWithSampleData(dishStore);
+    }
+
+    /** Returns the same object, which was passed as input argument. */
+    private static DishStore initializeDishStoreWithSampleData(final DishStore dishStore) {
         addDishToDishStore(dishStore, "Pasta", MealTime.LUNCH);
         addDishToDishStore(dishStore, "Pizza", MealTime.LUNCH);
         addDishToDishStore(dishStore, "Fish with Pesto", MealTime.LUNCH);

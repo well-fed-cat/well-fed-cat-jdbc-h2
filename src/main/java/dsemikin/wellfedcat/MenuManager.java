@@ -11,10 +11,8 @@ public class MenuManager {
 
     private final DishPicker dishPicker;
 
-    public MenuManager() {
-
-        dishPicker = new DishPicker();
-
+    public MenuManager(final DishStore dishStore) {
+        dishPicker = new DishPicker(dishStore);
     }
 
     public void fillMenu(final Menu menu) {
