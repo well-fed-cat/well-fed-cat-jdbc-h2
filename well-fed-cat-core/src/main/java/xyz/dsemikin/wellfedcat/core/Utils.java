@@ -1,4 +1,4 @@
-package xyz.dsemikin.wellfedcat;
+package xyz.dsemikin.wellfedcat.core;
 
 import java.time.LocalDate;
 import java.util.List;

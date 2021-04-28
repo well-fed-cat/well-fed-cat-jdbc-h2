@@ -1,11 +1,7 @@
-package xyz.dsemikin.wellfedcat;
+package xyz.dsemikin.wellfedcat.core;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 public class MenuManager {
 
