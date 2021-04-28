@@ -38,10 +38,10 @@ groovy:000> dishesStoreFile = Paths.get("C:\\tmp\\WellFedCatDishStore.wds")
 ===> C:\tmp\WellFedCatDishStore.wds
 
 groovy:000> dishesStore = new DishStoreSimpleFile(dishesStoreFile)
-===> dsemikin.wellfedcat.DishStoreSimpleFile@1c7350b0
+===> DishStoreSimpleFile@1c7350b0
 
 groovy:000> dishStore = dishesStore
-===> dsemikin.wellfedcat.DishStoreSimpleFile@1c7350b0
+===> DishStoreSimpleFile@1c7350b0
 
 groovy:000> dishStore.allDishes()
 ===> ...
@@ -72,7 +72,7 @@ jshell> var dishStoreFile = Paths.get("C:\\tmp\\WellFedCatDishStore.wds")
 dishStoreFile ==> C:\tmp\WellFedCatDishStore.wds
 
 jshell> var dishStore = new DishStoreSimpleFile(dishStoreFile)
-dishStore ==> dsemikin.wellfedcat.DishStoreSimpleFile@726f3b58
+dishStore ==> DishStoreSimpleFile@726f3b58
 
 jshell> Utils.printDishes(dishStore.allDishes())
 Dish[name=Eggs roasted, suitableForMealTimes=[SUPPER, LUNCH]]

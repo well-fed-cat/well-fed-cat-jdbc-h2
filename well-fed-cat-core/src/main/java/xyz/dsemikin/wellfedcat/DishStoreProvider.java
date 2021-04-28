@@ -1,4 +1,4 @@
-package dsemikin.wellfedcat;
+package xyz.dsemikin.wellfedcat;
 
 import java.nio.file.Path;
 import java.util.Arrays;

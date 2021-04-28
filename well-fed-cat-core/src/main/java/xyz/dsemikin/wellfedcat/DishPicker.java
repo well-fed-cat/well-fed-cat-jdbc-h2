@@ -1,4 +1,4 @@
-package dsemikin.wellfedcat;
+package xyz.dsemikin.wellfedcat;
 
 import java.util.ArrayList;
 import java.util.Collections;

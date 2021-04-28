@@ -1,4 +1,4 @@
-package dsemikin.wellfedcat;
+package xyz.dsemikin.wellfedcat;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
