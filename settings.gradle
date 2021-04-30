@@ -1,4 +1,0 @@
-rootProject.name = 'well-fed-cat-root'
-
-include 'well-fed-cat-core'
-
