@@ -1,4 +1,4 @@
-# well-fed-cat-lib-interactive #
+# well-fed-cat-core #
 
 The idea is to use this library from groovy or java interactive
 interpreter.
