@@ -13,6 +13,9 @@ public class DbSchemaUpdater {
                 .dataSource(dbUrl, user, password)
                 .locations("classpath:sql")
                 .load();
+
+        flyway.migrate();
+
         MigrationInfoService infoService = flyway.info();
 
         for (MigrationInfo info : infoService.all()) {
