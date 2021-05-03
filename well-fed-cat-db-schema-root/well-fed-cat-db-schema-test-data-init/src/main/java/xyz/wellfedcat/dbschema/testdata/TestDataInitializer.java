@@ -4,10 +4,12 @@ import org.h2.tools.RunScript;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class TestDataInitializer {
 
@@ -18,8 +20,11 @@ public class TestDataInitializer {
 
     public void initTestData() {
         try (
-            Connection connection = DriverManager.getConnection ("jdbc:h2:~/test", "sa","");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("sql/init-test-data.sql")));
+                Connection connection = DriverManager.getConnection ("jdbc:h2:~/test", "sa","");
+                InputStream inputStream = Objects.requireNonNull(
+                        getClass().getClassLoader().getResourceAsStream("sql/init-test-data.sql")
+                );
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
         ) {
             RunScript.execute(connection, reader);
         } catch (SQLException | IOException e) {
