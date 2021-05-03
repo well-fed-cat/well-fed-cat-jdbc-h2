@@ -21,7 +21,7 @@ public class TestDataInitializer {
 
     public void initTestData() {
         try (
-                Connection connection = DriverManager.getConnection ("jdbc:h2:~/test", "sa","");
+                Connection connection = DriverManager.getConnection ("jdbc:h2:~/wellfedcat_db", "sa","sa");
                 InputStream inputStream = Objects.requireNonNull(
                         getClass().getClassLoader().getResourceAsStream("sql/init-test-data.sql")
                 );
