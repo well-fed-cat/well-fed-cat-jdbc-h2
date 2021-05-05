@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

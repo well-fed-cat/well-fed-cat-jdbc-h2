@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+
 import java.util.List;
 
 public interface DishStore {

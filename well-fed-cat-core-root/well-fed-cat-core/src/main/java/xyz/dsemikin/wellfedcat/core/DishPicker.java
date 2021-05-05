@@ -1,5 +1,8 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.MealTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package xyz.dsemikin.wellfedcat.core;
+package xyz.dsemikin.wellfedcat.datamodel;
 
 import java.io.Serializable;
 import java.util.Set;

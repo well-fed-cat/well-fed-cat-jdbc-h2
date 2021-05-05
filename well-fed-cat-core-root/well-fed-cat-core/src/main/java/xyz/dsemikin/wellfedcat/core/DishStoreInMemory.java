@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;

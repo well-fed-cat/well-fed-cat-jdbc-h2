@@ -1,5 +1,8 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.MealTime;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 

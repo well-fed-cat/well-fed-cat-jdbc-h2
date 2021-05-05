@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
