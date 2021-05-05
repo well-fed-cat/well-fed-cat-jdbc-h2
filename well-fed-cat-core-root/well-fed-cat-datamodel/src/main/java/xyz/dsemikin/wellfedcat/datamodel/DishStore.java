@@ -1,6 +1,4 @@
-package xyz.dsemikin.wellfedcat.core;
-
-import xyz.dsemikin.wellfedcat.datamodel.Dish;
+package xyz.dsemikin.wellfedcat.datamodel;
 
 import java.util.List;
 

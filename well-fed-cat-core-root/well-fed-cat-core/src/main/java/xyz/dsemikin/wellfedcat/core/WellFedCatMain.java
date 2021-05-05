@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;

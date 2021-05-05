@@ -1,6 +1,7 @@
 package xyz.dsemikin.wellfedcat.core;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.DishStore;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 
 import java.util.ArrayList;
