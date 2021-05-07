@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class DishStoreInMemory
         implements DishStore, Serializable
@@ -29,8 +30,8 @@ public class DishStoreInMemory
     }
 
     @Override
-    public Dish dish(String name) {
-        return dishes.get(name);
+    public Optional<Dish> dish(String name) {
+        return Optional.ofNullable(dishes.get(name));
     }
 
     @Override

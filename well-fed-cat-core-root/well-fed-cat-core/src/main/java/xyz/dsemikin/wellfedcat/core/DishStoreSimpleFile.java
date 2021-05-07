@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 public class DishStoreSimpleFile implements DishStore {
 
@@ -56,7 +57,7 @@ public class DishStoreSimpleFile implements DishStore {
     }
 
     @Override
-    public Dish dish(String name) {
+    public Optional<Dish> dish(String name) {
         return inMemoryStore.dish(name);
     }
 
