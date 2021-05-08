@@ -3,6 +3,8 @@ package xyz.dsemikin.wellfedcat.core;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStore;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
+import xyz.dsemikin.wellfedcat.datastore.file.simple.DishStoreSimpleFile;
+import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
 import java.nio.file.Path;
 import java.util.Arrays;

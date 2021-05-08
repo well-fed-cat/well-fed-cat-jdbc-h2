@@ -1,7 +1,8 @@
-package xyz.dsemikin.wellfedcat.core;
+package xyz.dsemikin.wellfedcat.datastore.file.simple;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

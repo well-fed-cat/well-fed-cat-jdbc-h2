@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation project(':well-fed-cat-datamodel')
     implementation project(':well-fed-cat-datastore-inmemory')
-    implementation project(':well-fed-cat-datastore-simple-file')
-    implementation project(':well-fed-cat-datastore-db-h2')
+
+    implementation "org.slf4j:slf4j-api:1.7.30"
+    implementation "org.slf4j:slf4j-simple:1.7.30"
 }

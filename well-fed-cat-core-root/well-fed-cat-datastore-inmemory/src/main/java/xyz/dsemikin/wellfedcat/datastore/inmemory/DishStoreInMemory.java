@@ -1,4 +1,4 @@
-package xyz.dsemikin.wellfedcat.core;
+package xyz.dsemikin.wellfedcat.datastore.inmemory;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStore;
