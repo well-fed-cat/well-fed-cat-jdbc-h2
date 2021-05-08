@@ -1,5 +1,9 @@
-package xyz.dsemikin.wellfedcat.core;
+package xyz.dsemikin.wellfedcat.app.sample.simplefile;
 
+import xyz.dsemikin.wellfedcat.core.DishStoreProvider;
+import xyz.dsemikin.wellfedcat.core.Menu;
+import xyz.dsemikin.wellfedcat.core.MenuManager;
+import xyz.dsemikin.wellfedcat.core.Utils;
 import xyz.dsemikin.wellfedcat.datamodel.DishStore;
 
 import java.nio.file.Path;
