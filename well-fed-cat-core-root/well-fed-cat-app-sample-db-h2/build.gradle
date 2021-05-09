@@ -1,0 +1,17 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':well-fed-cat-datamodel')
+    implementation project(':well-fed-cat-core')
+    implementation project(':well-fed-cat-datastore-db-h2')
+}
+
+application {
+    mainClass = 'xyz.dsemikin.wellfedcat.app.sample.db.h2.WellFedCatSampleAppDbH2'
+}

@@ -14,12 +14,14 @@ public class DbConnector implements Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DbConnector.class);
 
-    private static final String DBNAME = "wellfedcat";
     private final Connection connection;
 
     public DbConnector(final String dbFilePath) throws SQLException {
-        final String fullDbFilePath = Paths.get(dbFilePath).toAbsolutePath().normalize().toString();
-        final String connectionUrl = "jdbc:h2:" + fullDbFilePath + "/" + DBNAME;
+        // TODO: dbFilePath is not actually a real path. The file name in it is without extension
+        // TODO: solution below fails, if input has form "~/something". How to solve it?
+//        final String fullDbFilePath = Paths.get(dbFilePath).toAbsolutePath().normalize().toString();
+        final String fullDbFilePath = dbFilePath;
+        final String connectionUrl = "jdbc:h2:" + fullDbFilePath;
         connection = DriverManager.getConnection(connectionUrl, "sa", "sa");
     }
 
@@ -28,7 +30,7 @@ public class DbConnector implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
