@@ -22,3 +22,7 @@ On Windows to support output in cyrillic characters (if
 default windows code page is "Western" or other non
 cyrillic, then use `chcp 866` in the terminal.
 
+When using gradle, to create directory with all jars and
+startup script use `gradle installDist` (from distribution
+plugin). It will create directory "build\installation"
+with needed content.
