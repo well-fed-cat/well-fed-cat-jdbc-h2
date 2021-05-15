@@ -15,6 +15,7 @@ public class Utils {
     }
 
     public static void printMenu(final Menu menu) {
+        System.out.println();
         for (DayMenu dayMenu : menu) {
             StringBuilder stringBuilder = new StringBuilder();
             Optional<LocalDate> maybeDate = dayMenu.getMaybeDate();
@@ -25,20 +26,23 @@ public class Utils {
                 stringBuilder.append(dayMenu.getMaybeDayOfWeek().get());
             }
             System.out.println(stringBuilder);
+            System.out.print("Breakfast:");
+            for (var dish : dayMenu.getBreakfast()) {
+                System.out.print(" " + dish.name() + ",");
+            }
+            System.out.print("\n");
 
-            System.out.println();
-            System.out.println("Breakfast:");
-            printDishes(dayMenu.getBreakfast());
+            System.out.print("Lunch:");
+            for (var dish : dayMenu.getLunch()) {
+                System.out.print(" " + dish.name() + ",");
+            }
+            System.out.print("\n");
 
-            System.out.println();
-            System.out.println("Lunch:");
-            printDishes(dayMenu.getLunch());
-
-            System.out.println();
-            System.out.println("Supper:");
-            printDishes(dayMenu.getSupper());
-
-            System.out.println();
+            System.out.print("Supper:");
+            for (var dish : dayMenu.getSupper()) {
+                System.out.print(" " + dish.name() + ",");
+            }
+            System.out.print("\n");
             System.out.println();
         }
     }

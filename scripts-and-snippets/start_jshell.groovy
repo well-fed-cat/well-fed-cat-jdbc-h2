@@ -25,6 +25,7 @@ class start_groovysh {
 
         processBuilder.command(
                 "C:\\d\\Apps\\amazon-corretto-16.0.0.36.1-windows-x64-jdk\\jdk16.0.0_36\\bin\\jshell.exe",
+                    "-R-Dfile.encoding=UTF-8",
                     "--class-path",
                     "../well-fed-cat-core-root/well-fed-cat-app-sample-db-h2/build/install/well-fed-cat-app-sample-db-h2/lib/*"
                 )
