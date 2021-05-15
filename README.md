@@ -10,7 +10,32 @@ It is still work in progress and probably is not very interesting
 for end-users.
 
 
+## TODO ##
+
+* Move initialization of dishes DB in Russian into separate project.
+* Create initialization of dishes DB in English.
+* Make field for dish name in the DB longer (100 characters or so).
+* Add ID to DISH table in the DB. Should it be UUID or integer?
+* Add public-id to DISH table, which is string of ascii character
+  used as abbreviation for the dish. Intended to be used, when manually
+  working with dishes database (using console or DB client).
+* Add to the persistence model the way to save menu history, i.e.
+  sequence of day-menus for each day in the past. We also would need
+  a way to "accept" some menu and so to "commit" a menu into the history.
+* During generation of new menu the algorithm should take into account
+  the saved history (probably depth can be specified).
+* Maybe we need some tools to clean up the history.
+
+
 ## Various hints ##
+
+### Setting source encoding in gradle ###
+
+```
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+```
+
 
 ### Cyrillic in Windows Terminal ###
 
