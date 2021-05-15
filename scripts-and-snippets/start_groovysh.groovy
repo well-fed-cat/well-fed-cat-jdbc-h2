@@ -19,9 +19,11 @@ class start_groovysh {
         final Map<String, String> environment = processBuilder.environment()
         final String javaHomeKey = findKeyInMapStringStringCaseInsensitive(environment, "JAVA_HOME") ?: "JAVA_HOME"
         final String pathKey = findKeyInMapStringStringCaseInsensitive(environment, "PATH") ?: "PATH";
+        final String javaOptsKey = findKeyInMapStringStringCaseInsensitive(environment, "JAVA_OPTS") ?: "JAVA_OPTS";
 
         environment.put(javaHomeKey, JAVA_HOME)
         environment.put(pathKey, JAVA_BIN + ";" + environment.get(pathKey))
+        environment.put(javaOptsKey, "-Dfile.encoding=UTF-8")
 
         processBuilder.command(
                 "C:\\d\\Apps\\groovy-3.0.7\\bin\\groovysh.bat",
