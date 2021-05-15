@@ -12,6 +12,9 @@ for end-users.
 
 ## TODO ##
 
+* When adding dishes to store make it possible to ignore failures
+  or to replace existing dish.
+* When deleting dish from store add some feedback.
 * Move initialization of dishes DB in Russian into separate project.
 * Create initialization of dishes DB in English.
 * Make field for dish name in the DB longer (100 characters or so).

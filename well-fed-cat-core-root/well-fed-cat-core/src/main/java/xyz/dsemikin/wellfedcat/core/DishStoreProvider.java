@@ -1,7 +1,8 @@
 package xyz.dsemikin.wellfedcat.core;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
-import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datastore.file.simple.DishStoreSimpleFile;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
@@ -12,18 +13,18 @@ import java.util.HashSet;
 
 public class DishStoreProvider {
 
-    public static DishStore getDishStore() {
+    public static DishStoreEditable getDishStore() throws DishStoreException {
         final DishStoreInMemory dishStore = new DishStoreInMemory();
         return initializeDishStoreWithSampleData(dishStore);
     }
 
-    public static DishStore getDishStoreSimpleFileAndFillWithSampleData(final Path dishStoreFile) {
+    public static DishStoreEditable getDishStoreSimpleFileAndFillWithSampleData(final Path dishStoreFile) throws DishStoreException {
         DishStoreSimpleFile dishStore = new DishStoreSimpleFile(dishStoreFile);
         return initializeDishStoreWithSampleData(dishStore);
     }
 
     /** Returns the same object, which was passed as input argument. */
-    private static DishStore initializeDishStoreWithSampleData(final DishStore dishStore) {
+    private static DishStoreEditable initializeDishStoreWithSampleData(final DishStoreEditable dishStore) throws DishStoreException {
         addDishToDishStore(dishStore, "Pasta", MealTime.LUNCH);
         addDishToDishStore(dishStore, "Pizza", MealTime.LUNCH);
         addDishToDishStore(dishStore, "Fish with Pesto", MealTime.LUNCH);
@@ -42,10 +43,10 @@ public class DishStoreProvider {
     }
 
     private static void addDishToDishStore(
-            final DishStore dishStore,
+            final DishStoreEditable dishStore,
             final String dishName,
             final MealTime... mealTimes
-    ) {
+    ) throws DishStoreException {
         dishStore.addDish(new Dish(dishName, new HashSet<>(Arrays.stream(mealTimes).toList())));
     }
 }

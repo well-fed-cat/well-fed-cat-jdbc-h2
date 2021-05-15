@@ -1,7 +1,7 @@
 package xyz.dsemikin.wellfedcat.datastore.inmemory;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
-import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class DishStoreInMemory
-        implements DishStore, Serializable
+        implements DishStoreEditable, Serializable
 {
 
     @Serial

@@ -1,7 +1,7 @@
 package xyz.dsemikin.wellfedcat.datastore.db.h2;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
-import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DishStoreDbH2 implements
-        DishStore,
+        DishStoreEditable,
         Closeable
 {
     private final DbConnector dbConnector;
@@ -46,7 +46,7 @@ public class DishStoreDbH2 implements
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         dbConnector.close();
     }
 }

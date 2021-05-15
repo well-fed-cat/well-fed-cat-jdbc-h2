@@ -1,7 +1,7 @@
 package xyz.dsemikin.wellfedcat.datastore.file.simple;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
-import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
 import java.io.FileInputStream;
@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
-public class DishStoreSimpleFile implements DishStore {
+public class DishStoreSimpleFile implements DishStoreEditable {
 
     final DishStoreInMemory inMemoryStore;
     final Path filePath;

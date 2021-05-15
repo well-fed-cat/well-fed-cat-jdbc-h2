@@ -1,7 +1,8 @@
 package xyz.dsemikin.wellfedcat.core;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
-import xyz.dsemikin.wellfedcat.datamodel.DishStore;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 
 import java.time.DayOfWeek;
@@ -11,7 +12,7 @@ public class MenuManager {
 
     private final DishPicker dishPicker;
 
-    public MenuManager(final DishStore dishStore) {
+    public MenuManager(final DishStoreEditable dishStore) throws DishStoreException {
         dishPicker = new DishPicker(dishStore);
     }
 
