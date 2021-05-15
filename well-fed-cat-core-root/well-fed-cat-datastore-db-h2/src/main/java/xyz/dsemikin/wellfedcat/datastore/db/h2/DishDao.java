@@ -68,8 +68,10 @@ public class DishDao {
                 final String dishName = resultSet.getString("dish_name");
                 if (!previousDishName.equals(dishName)) {
 
-                    final Dish dish = new Dish(previousDishName, mealTimes);
-                    dishes.add(dish);
+                    if (!previousDishName.isEmpty()) {
+                        final Dish dish = new Dish(previousDishName, mealTimes);
+                        dishes.add(dish);
+                    }
 
                     previousDishName = dishName;
                     mealTimes = new HashSet<>();
