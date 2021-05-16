@@ -98,7 +98,9 @@ public class DishDao {
             getDishStatement.setString(1, dishName);
             ResultSet resultSet = getDishStatement.executeQuery();
             final Set<MealTime> mealTimes = new HashSet<>();
+            int rowCount = 0;
             while(resultSet.next()) {
+                rowCount = resultSet.getRow();
                 final String currentDishName = resultSet.getString("dish_name");
                 if (!dishName.equals(currentDishName)) {
                     throw new IllegalStateException("More then one result received, while getting dish: " + dishName);
@@ -110,7 +112,7 @@ public class DishDao {
                 }
             }
 
-            if (resultSet.getRow() == 0) {
+            if (rowCount == 0) {
                 return Optional.empty();
             }
 
@@ -119,8 +121,10 @@ public class DishDao {
     }
 
     public boolean addDish(Dish dish) throws SQLException {
-        final boolean initialAutoCommit;
-        initialAutoCommit = connection().getAutoCommit();
+        if (this.dish(dish.name()).isPresent()) {
+            return false;
+        }
+        final boolean initialAutoCommit = connection().getAutoCommit();
         try {
             connection().setAutoCommit(false);
             try (PreparedStatement insertDishStatement = connection().prepareStatement(INSERT_DISH_QUERY)) {
