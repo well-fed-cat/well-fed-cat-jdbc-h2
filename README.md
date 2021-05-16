@@ -12,13 +12,9 @@ for end-users.
 
 ## TODO ##
 
-* When adding dishes to store make it possible to ignore failures
-  or to replace existing dish.
-* When deleting dish from store, add some feedback.
-* Move initialization of dishes DB in Russian into separate project.
-* Create initialization of dishes DB in English.
+* Create initialization of dishes DB in Rus-Translit.
 * Make field for dish name in the DB longer (100 characters or so).
-* Add ID to DISH table in the DB. Should it be UUID or integer?
+* Add ID to DISH table in the DB. Should it be UUID or number?
 * Add public id to DISH table, which is string of ascii character
   used as abbreviation for the dish. Intended to be used, when manually
   working with dishes database (using console or DB client).
@@ -29,6 +25,9 @@ for end-users.
   the saved history (probably depth can be specified).
 * Maybe we need some tools to clean up the history.
 * Add flag to dish to exclude it from using in menus.
+* Create initialization of dishes DB in English.
+* Add automated tests.
+* Make DB-based dishStores check schema version.
 
 
 ## Various hints ##
