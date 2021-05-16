@@ -25,22 +25,27 @@ public class DishStoreInMemory
     }
 
     @Override
-    public List<Dish> allDishes() {
+    public List<Dish> all() {
         return new ArrayList<>(dishes.values());
     }
 
     @Override
-    public Optional<Dish> dish(String name) {
+    public Optional<Dish> get(String name) {
         return Optional.ofNullable(dishes.get(name));
     }
 
     @Override
-    public void addDish(Dish dish) {
+    public boolean add(Dish dish) {
+        if (dishes.containsKey(dish.name())) {
+            return false;
+        }
         dishes.put(dish.name(), dish);
+        return true;
     }
 
     @Override
-    public void removeDish(String name) {
-        dishes.remove(name);
+    public RemoveStatus remove(String name) {
+        Dish removedDish = dishes.remove(name);
+        return removedDish == null ? RemoveStatus.DOES_NOT_EXIST : RemoveStatus.SUCCESS;
     }
 }

@@ -2,9 +2,9 @@ package xyz.dsemikin.wellfedcat.datastore.db.h2;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -21,28 +21,44 @@ public class DishStoreDbH2 implements
             dbConnector = new DbConnector(dbFilePath);
             dishDao = new DishDao(dbConnector.connection());
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to connect to database.", e);
+            throw new DishStoreException("Failed to connect to database.", e);
         }
     }
 
     @Override
-    public List<Dish> allDishes() {
-        return dishDao.allDishes();
+    public List<Dish> all() {
+        try {
+            return dishDao.allDishes();
+        } catch (SQLException e) {
+            throw new DishStoreException("Failed to get all dishes.", e);
+        }
     }
 
     @Override
-    public Optional<Dish> dish(final String name) {
-        return dishDao.dish(name);
+    public Optional<Dish> get(final String name) {
+        try {
+            return dishDao.dish(name);
+        } catch (SQLException e) {
+            throw new DishStoreException("Failed to get the dish.", e);
+        }
     }
 
     @Override
-    public void addDish(final Dish dish) {
-        dishDao.addDish(dish);
+    public boolean add(final Dish dish) {
+        try {
+            return dishDao.addDish(dish);
+        } catch (SQLException e) {
+            throw new DishStoreException("Failed to add dish.", e);
+        }
     }
 
     @Override
-    public void removeDish(final String name) {
-        dishDao.removeDish(name);
+    public RemoveStatus remove(final String name) {
+        try {
+            return dishDao.removeDish(name);
+        } catch (SQLException e) {
+            throw new DishStoreException("Failed to remove dish", e);
+        }
     }
 
     @Override

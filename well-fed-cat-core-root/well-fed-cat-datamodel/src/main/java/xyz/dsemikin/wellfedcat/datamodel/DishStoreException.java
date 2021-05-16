@@ -4,7 +4,7 @@ package xyz.dsemikin.wellfedcat.datamodel;
  *
  * It can also be used directly.
  */
-public class DishStoreException extends Exception {
+public class DishStoreException extends RuntimeException {
 
     public DishStoreException(final String message) {
         super(message);

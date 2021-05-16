@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 public class WellFedCatMain {
 
-    public static void main(String[] args) throws DishStoreException {
+    public static void main(String[] args) {
         final Path dishStoreFile = Paths.get("C:\\tmp\\WellFedCatDishStore.wds");
         final DishStoreEditable dishStore = DishStoreProvider.getDishStoreSimpleFileAndFillWithSampleData(dishStoreFile);
         final var menuManager = new MenuManager(dishStore);

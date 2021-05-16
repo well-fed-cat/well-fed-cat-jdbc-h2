@@ -13,18 +13,18 @@ import java.util.HashSet;
 
 public class DishStoreProvider {
 
-    public static DishStoreEditable getDishStore() throws DishStoreException {
+    public static DishStoreEditable getDishStore() {
         final DishStoreInMemory dishStore = new DishStoreInMemory();
         return initializeDishStoreWithSampleData(dishStore);
     }
 
-    public static DishStoreEditable getDishStoreSimpleFileAndFillWithSampleData(final Path dishStoreFile) throws DishStoreException {
+    public static DishStoreEditable getDishStoreSimpleFileAndFillWithSampleData(final Path dishStoreFile) {
         DishStoreSimpleFile dishStore = new DishStoreSimpleFile(dishStoreFile);
         return initializeDishStoreWithSampleData(dishStore);
     }
 
     /** Returns the same object, which was passed as input argument. */
-    private static DishStoreEditable initializeDishStoreWithSampleData(final DishStoreEditable dishStore) throws DishStoreException {
+    private static DishStoreEditable initializeDishStoreWithSampleData(final DishStoreEditable dishStore) {
         addDishToDishStore(dishStore, "Pasta", MealTime.LUNCH);
         addDishToDishStore(dishStore, "Pizza", MealTime.LUNCH);
         addDishToDishStore(dishStore, "Fish with Pesto", MealTime.LUNCH);
@@ -46,7 +46,7 @@ public class DishStoreProvider {
             final DishStoreEditable dishStore,
             final String dishName,
             final MealTime... mealTimes
-    ) throws DishStoreException {
-        dishStore.addDish(new Dish(dishName, new HashSet<>(Arrays.stream(mealTimes).toList())));
+    ) {
+        dishStore.add(new Dish(dishName, new HashSet<>(Arrays.stream(mealTimes).toList())));
     }
 }

@@ -2,6 +2,7 @@ package xyz.dsemikin.wellfedcat.datastore.file.simple;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
 import java.io.FileInputStream;
@@ -22,21 +23,17 @@ public class DishStoreSimpleFile implements DishStoreEditable {
     public DishStoreSimpleFile(final Path filePath) {
         this.filePath = filePath;
         if (Files.exists(filePath)) {
-            try {
-                inMemoryStore = readDishStoreFromFile(filePath);
-            } catch (IOException | ClassNotFoundException e) {
-                throw new IllegalStateException("Failed to read dishes store from file.", e);
-            }
+            inMemoryStore = readDishStoreFromFile(filePath);
         } else {
             inMemoryStore = new DishStoreInMemory();
         }
     }
 
-    private static DishStoreInMemory readDishStoreFromFile(final Path filePath)
-            throws IOException, ClassNotFoundException
-    {
+    private static DishStoreInMemory readDishStoreFromFile(final Path filePath) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath.toFile()))) {
             return (DishStoreInMemory) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new DishStoreException("Failed to read dishStore file", e);
         }
     }
 
@@ -53,32 +50,34 @@ public class DishStoreSimpleFile implements DishStoreEditable {
     }
 
     @Override
-    public List<Dish> allDishes() {
-        return inMemoryStore.allDishes();
+    public List<Dish> all() {
+        return inMemoryStore.all();
     }
 
     @Override
-    public Optional<Dish> dish(String name) {
-        return inMemoryStore.dish(name);
+    public Optional<Dish> get(String name) {
+        return inMemoryStore.get(name);
     }
 
     @Override
-    public void addDish(Dish dish) {
-        inMemoryStore.addDish(dish);
+    public boolean add(Dish dish) {
         try {
+            final boolean result = inMemoryStore.add(dish);
             writeDishStoreToFile(filePath, inMemoryStore);
+            return result;
         } catch (IOException e) {
-            throw new IllegalStateException("Failed to write dishes store file.", e);
+            throw new DishStoreException("Failed to write dishes store file.", e);
         }
     }
 
     @Override
-    public void removeDish(String name) {
-        inMemoryStore.removeDish(name);
+    public RemoveStatus remove(String name) {
         try {
+            final RemoveStatus status = inMemoryStore.remove(name);
             writeDishStoreToFile(filePath, inMemoryStore);
+            return status;
         } catch (IOException e) {
-            throw new IllegalStateException("Failed to write dishes store file.", e);
+            throw new DishStoreException("Failed to write dishes store file.", e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package xyz.dsemikin.wellfedcat.datastore.db.h2;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 
 import java.sql.Connection;
@@ -54,7 +55,7 @@ public class DishDao {
         this.connection = connection;
     }
 
-    public List<Dish> allDishes() {
+    public List<Dish> allDishes() throws SQLException {
 
         try(PreparedStatement allDishesStatement = connection().prepareStatement(ALL_DISHES_QUERY)) {
 
@@ -87,12 +88,10 @@ public class DishDao {
             dishes.add(dish);
 
             return dishes;
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to query all dishes.", e);
         }
     }
 
-    public Optional<Dish> dish(String dishName) {
+    public Optional<Dish> dish(String dishName) throws SQLException {
 
         try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_QUERY)) {
 
@@ -116,54 +115,49 @@ public class DishDao {
             }
 
             return Optional.of(new Dish(dishName, mealTimes));
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to query dish.", e);
         }
     }
 
-    public void addDish(Dish dish) {
+    public boolean addDish(Dish dish) throws SQLException {
         final boolean initialAutoCommit;
+        initialAutoCommit = connection().getAutoCommit();
         try {
-            initialAutoCommit = connection().getAutoCommit();
-            try {
-                connection().setAutoCommit(false);
-                try (PreparedStatement insertDishStatement = connection().prepareStatement(INSERT_DISH_QUERY)) {
-                    insertDishStatement.setString(1, dish.name());
-                    final int insertedRowsCount = insertDishStatement.executeUpdate();
-                    if (insertedRowsCount != 1) {
-                        throw new IllegalStateException("Failed to insert dish: " + dish.name());
-                    }
+            connection().setAutoCommit(false);
+            try (PreparedStatement insertDishStatement = connection().prepareStatement(INSERT_DISH_QUERY)) {
+                insertDishStatement.setString(1, dish.name());
+                final int insertedRowsCount = insertDishStatement.executeUpdate();
+                if (insertedRowsCount != 1) {
+                    connection().rollback();
+                    return false;
                 }
-                try (PreparedStatement insertDishMealTimeStatement = connection().prepareStatement(INSERT_DISH_MEAL_TIME_QUERY)) {
-                    for (MealTime mealTime : dish.suitableForMealTimes()) {
-                        insertDishMealTimeStatement.setString(1, dish.name());
-                        insertDishMealTimeStatement.setString(2, mealTime.toString());
-                        final int insertedRowsCount = insertDishMealTimeStatement.executeUpdate();
-                        if (insertedRowsCount != 1) {
-                            throw new IllegalStateException("Failed to inset meal time " + mealTime + " for dish " + dish.name());
-                        }
-                    }
-                }
-                connection().commit();
-            } catch (Exception e) {
-                connection().rollback();
-                throw e;
-            } finally {
-                connection().setAutoCommit(initialAutoCommit);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to insert dish.", e);
+            try (PreparedStatement insertDishMealTimeStatement = connection().prepareStatement(INSERT_DISH_MEAL_TIME_QUERY)) {
+                for (MealTime mealTime : dish.suitableForMealTimes()) {
+                    insertDishMealTimeStatement.setString(1, dish.name());
+                    insertDishMealTimeStatement.setString(2, mealTime.toString());
+                    final int insertedRowsCount = insertDishMealTimeStatement.executeUpdate();
+                    if (insertedRowsCount != 1) {
+                        connection().rollback();
+                        return false;
+                    }
+                }
+            }
+            connection().commit();
+            return true;
+        } catch (Exception e) {
+            connection().rollback();
+            throw e;
+        } finally {
+            connection().setAutoCommit(initialAutoCommit);
         }
     }
 
-    public boolean removeDish(String name) {
+    public DishStoreEditable.RemoveStatus removeDish(String name) throws SQLException {
         try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_QUERY)) {
             deleteDishStatement.setString(1, name);
             // we don't need to delete dish_meal_time because of "cascade" delete policy.
             final int deletedRowsCount = deleteDishStatement.executeUpdate();
-            return deletedRowsCount == 1;
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to remove dish.", e);
+            return deletedRowsCount == 1 ? DishStoreEditable.RemoveStatus.SUCCESS : DishStoreEditable.RemoveStatus.DOES_NOT_EXIST;
         }
     }
 

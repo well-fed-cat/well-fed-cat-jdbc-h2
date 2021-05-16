@@ -12,7 +12,7 @@ public class MenuManager {
 
     private final DishPicker dishPicker;
 
-    public MenuManager(final DishStoreEditable dishStore) throws DishStoreException {
+    public MenuManager(final DishStoreEditable dishStore) {
         dishPicker = new DishPicker(dishStore);
     }
 
