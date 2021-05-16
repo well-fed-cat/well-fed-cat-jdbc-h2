@@ -2,7 +2,7 @@
 
 -- TODO: Add documentation
 create table dish (
-    name varchar(50),
+    name varchar(100),
 
     constraint pk_dish primary key (name)
 );
@@ -14,7 +14,7 @@ create table meal_time (
 );
 
 create table dish_meal_time (
-    dish_name varchar(50),
+    dish_name varchar(100),
     meal_time_name varchar(10),
 
     constraint pk_dish_meal_time primary key(dish_name, meal_time_name),

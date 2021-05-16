@@ -12,12 +12,12 @@ for end-users.
 
 ## TODO ##
 
-* Create initialization of dishes DB in Rus-Translit.
-* Make field for dish name in the DB longer (100 characters or so).
-* Add ID to DISH table in the DB. Should it be UUID or number?
 * Add public id to DISH table, which is string of ascii character
   used as abbreviation for the dish. Intended to be used, when manually
   working with dishes database (using console or DB client).
+* Add api to modify dish (`update()` method, which replaces dish object
+  by ID with provided object)
+* Add api to modify dish public ID.
 * Add to the persistence model the way to save menu history, i.e.
   sequence of day-menus for each day in the past. We also would need
   a way to "accept" some menu and so to "commit" a menu into the history.
@@ -25,6 +25,7 @@ for end-users.
   the saved history (probably depth can be specified).
 * Maybe we need some tools to clean up the history.
 * Add flag to dish to exclude it from using in menus.
+* Create initialization of dishes DB in Rus-Translit.
 * Create initialization of dishes DB in English.
 * Add automated tests.
 * Make DB-based dishStores check schema version.
