@@ -19,6 +19,7 @@ public class DishDao {
 
     private final String ALL_DISHES_QUERY = """
             select
+                dish.public_id                as dish_public_id,
                 dish.name                     as dish_name,
                 dish_meal_time.meal_time_name as meal_time
             from dish
@@ -27,7 +28,8 @@ public class DishDao {
 
     private final String SELECT_DISH_QUERY = """
             select
-                dish.name as dish_name,
+                dish.public_id                as dish_public_id,
+                dish.name                     as dish_name,
                 dish_meal_time.meal_time_name as meal_time
             from dish
             left join dish_meal_time on (dish_meal_time.dish_name = dish.name)
@@ -35,18 +37,18 @@ public class DishDao {
             """;
 
     private final String INSERT_DISH_QUERY = """
-            insert into dish (name)
-            values (?)
+            insert into dish (public_id, name)
+            values (?, ?)
             """;
 
     private final String INSERT_DISH_MEAL_TIME_QUERY = """
-            insert into dish_meal_time (dish_name, meal_time_name)
+            insert into dish_meal_time (dish_public_id, meal_time_name)
             values (?, ?)
             """;
 
     private final String DELETE_DISH_QUERY = """
             delete from dish
-            where name = ?
+            where public_id = ?
             """;
 
     private final Connection connection; // don't use directly. Use connection() instead, so that it later can be replaced with the pool
