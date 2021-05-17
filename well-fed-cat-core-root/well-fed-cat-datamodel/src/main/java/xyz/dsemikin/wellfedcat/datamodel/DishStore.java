@@ -26,4 +26,7 @@ public interface DishStore {
      */
     Optional<Dish> get(final String name);
 
+    // TODO: Rename get() -> getByName()
+    // TODO: Add getById()
+
 }

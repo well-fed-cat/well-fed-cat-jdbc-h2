@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.app.dishstore.initializers;
 
+import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datastore.db.h2.DishStoreDbH2;
 
 import java.util.Collections;
@@ -12,7 +14,7 @@ public class DbH2Rus {
         final var dishStore = new DishStoreDbH2(dbFilePath);
 
         // TODO: Fix definition of dish.
-//        dishStore.add(new Dish("Овсяная каша", newHashSet(MealTime.BREAKFAST)));
+        dishStore.add(new Dish("ovsyanaya_kasha", "Овсяная каша", newHashSet(MealTime.BREAKFAST)));
 //        dishStore.add(new Dish("Манная каша", newHashSet(MealTime.BREAKFAST)));
 //        dishStore.add(new Dish("Бутерброды",                                   newHashSet(MealTime.BREAKFAST, MealTime.SUPPER)));
 //        dishStore.add(new Dish("Овсяные хлопья/мюсли",                         newHashSet(MealTime.BREAKFAST, MealTime.SUPPER)));

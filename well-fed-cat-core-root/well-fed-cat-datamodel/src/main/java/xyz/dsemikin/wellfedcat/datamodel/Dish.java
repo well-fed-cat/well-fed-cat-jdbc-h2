@@ -14,6 +14,7 @@ public record Dish(
     public static final int MAX_DISH_NAME_LENGTH = 100; // must be coherent with DB schema
 
     public Dish {
+        // TODO: Check, that arguments are not empty
         final boolean publicIdIsOk =
                 publicId.codePoints().allMatch(c ->
                         c < 128 &&

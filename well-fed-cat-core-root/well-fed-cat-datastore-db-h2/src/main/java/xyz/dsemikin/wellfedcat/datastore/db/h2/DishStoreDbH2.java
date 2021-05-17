@@ -37,7 +37,7 @@ public class DishStoreDbH2 implements
     @Override
     public Optional<Dish> get(final String name) {
         try {
-            return dishDao.dish(name);
+            return dishDao.dishByName(name);
         } catch (SQLException e) {
             throw new DishStoreException("Failed to get the dish.", e);
         }
@@ -55,7 +55,7 @@ public class DishStoreDbH2 implements
     @Override
     public RemoveStatus remove(final String name) {
         try {
-            return dishDao.removeDish(name);
+            return dishDao.removeDishByName(name);
         } catch (SQLException e) {
             throw new DishStoreException("Failed to remove dish", e);
         }

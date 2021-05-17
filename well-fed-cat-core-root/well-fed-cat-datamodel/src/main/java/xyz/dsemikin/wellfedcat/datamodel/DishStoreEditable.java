@@ -41,4 +41,7 @@ public interface DishStoreEditable extends DishStore {
         /** Dish was not removed, because it would vialate some constraints (e.g. record is referenced by other records in SQL DB). */
         CANNOT_BE_DELETED
     }
+
+    // TODO: Rename remove -> removeByName()
+    // TODO: removeById()
 }

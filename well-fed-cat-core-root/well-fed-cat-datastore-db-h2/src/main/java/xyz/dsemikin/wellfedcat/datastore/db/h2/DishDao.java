@@ -23,16 +23,26 @@ public class DishDao {
                 dish.name                     as dish_name,
                 dish_meal_time.meal_time_name as meal_time
             from dish
-            left join dish_meal_time on (dish_meal_time.dish_name = dish.name)
+            left join dish_meal_time on (dish_meal_time.dish_public_id = dish.public_id)
             """;
 
-    private final String SELECT_DISH_QUERY = """
+    private final String SELECT_DISH_BY_ID_QUERY = """
             select
                 dish.public_id                as dish_public_id,
                 dish.name                     as dish_name,
                 dish_meal_time.meal_time_name as meal_time
             from dish
-            left join dish_meal_time on (dish_meal_time.dish_name = dish.name)
+            left join dish_meal_time on (dish_meal_time.dish_public_id = dish.public_id)
+            where dish.public_id = ?
+            """;
+
+    private final String SELECT_DISH_BY_NAME_QUERY = """
+            select
+                dish.public_id                as dish_public_id,
+                dish.name                     as dish_name,
+                dish_meal_time.meal_time_name as meal_time
+            from dish
+            left join dish_meal_time on (dish_meal_time.dish_public_id = dish.public_id)
             where dish.name = ?
             """;
 
@@ -46,7 +56,12 @@ public class DishDao {
             values (?, ?)
             """;
 
-    private final String DELETE_DISH_QUERY = """
+    private final String DELETE_DISH_BY_NAME_QUERY = """
+            delete from dish
+            where name = ?
+            """;
+
+    private final String DELETE_DISH_BY_ID_QUERY = """
             delete from dish
             where public_id = ?
             """;
@@ -64,18 +79,21 @@ public class DishDao {
             ResultSet resultSet = allDishesStatement.executeQuery();
 
             final List<Dish> dishes = new ArrayList<>();
+            String previousDishPublicId = "";
             String previousDishName = "";
             Set<MealTime> mealTimes = new HashSet<>();
 
             while (resultSet.next()) {
+                final String dishPublicId = resultSet.getString("dish_public_id");
                 final String dishName = resultSet.getString("dish_name");
                 if (!previousDishName.equals(dishName)) {
 
-                    if (!previousDishName.isEmpty()) {
-                        final Dish dish = new Dish(previousDishName, mealTimes);
+                    if (!previousDishPublicId.isEmpty()) {
+                        final Dish dish = new Dish(previousDishPublicId, previousDishName, mealTimes);
                         dishes.add(dish);
                     }
 
+                    previousDishPublicId = dishPublicId;
                     previousDishName = dishName;
                     mealTimes = new HashSet<>();
                 }
@@ -86,23 +104,25 @@ public class DishDao {
                 }
             }
 
-            final Dish dish = new Dish(previousDishName, mealTimes);
+            final Dish dish = new Dish(previousDishPublicId, previousDishName, mealTimes);
             dishes.add(dish);
 
             return dishes;
         }
     }
 
-    public Optional<Dish> dish(String dishName) throws SQLException {
+    public Optional<Dish> dishByName(final String dishName) throws SQLException {
 
-        try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_QUERY)) {
+        try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_BY_NAME_QUERY)) {
 
             getDishStatement.setString(1, dishName);
             ResultSet resultSet = getDishStatement.executeQuery();
+            String dishPublicId = "";
             final Set<MealTime> mealTimes = new HashSet<>();
             int rowCount = 0;
             while(resultSet.next()) {
                 rowCount = resultSet.getRow();
+                dishPublicId = resultSet.getString("dish_public_id");
                 final String currentDishName = resultSet.getString("dish_name");
                 if (!dishName.equals(currentDishName)) {
                     throw new IllegalStateException("More then one result received, while getting dish: " + dishName);
@@ -118,19 +138,58 @@ public class DishDao {
                 return Optional.empty();
             }
 
-            return Optional.of(new Dish(dishName, mealTimes));
+            return Optional.of(new Dish(dishPublicId, dishName, mealTimes));
+        }
+
+    }
+
+    public Optional<Dish> dishById(final String dishPublicId) throws SQLException {
+
+        try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_BY_ID_QUERY)) {
+
+            getDishStatement.setString(1, dishPublicId);
+            ResultSet resultSet = getDishStatement.executeQuery();
+            final Set<MealTime> mealTimes = new HashSet<>();
+            String dishName = "";
+            int rowCount = 0;
+            while(resultSet.next()) {
+                rowCount = resultSet.getRow();
+                final String currentDishPublicId = resultSet.getString("dish_public_id");
+                dishName = resultSet.getString("dish_name");
+                if (!dishPublicId.equals(currentDishPublicId)) {
+                    throw new IllegalStateException("More then one result received, while getting dish: " + dishPublicId);
+                }
+                final String mealTimeString = resultSet.getString("meal_time");
+                if (mealTimeString != null && !mealTimeString.isEmpty()) {
+                    final MealTime mealTime = MealTime.valueOf(mealTimeString);
+                    mealTimes.add(mealTime);
+                }
+            }
+
+            if (rowCount == 0) {
+                return Optional.empty();
+            }
+
+            return Optional.of(new Dish(dishPublicId, dishName, mealTimes));
         }
     }
 
     public boolean addDish(Dish dish) throws SQLException {
-        if (this.dish(dish.name()).isPresent()) {
+        // This solution is not perfect. One can insert dish between we check and insert the dish.
+        // But for now it is considered to be least evil. Alternatives would be:
+        // - try to insert and catch exception. Exception is not JDBC standard, so it would make code
+        //   significantly DB-dependent.
+        // - check if there is some JDBC api to lock table. Maybe not, then we have same problem,
+        //   as for point 1. But even if there is, then it still makes things too complicated.
+        if (this.dishByName(dish.name()).isPresent() || this.dishById(dish.publicId()).isPresent()) {
             return false;
         }
         final boolean initialAutoCommit = connection().getAutoCommit();
         try {
             connection().setAutoCommit(false);
             try (PreparedStatement insertDishStatement = connection().prepareStatement(INSERT_DISH_QUERY)) {
-                insertDishStatement.setString(1, dish.name());
+                insertDishStatement.setString(1, dish.publicId());
+                insertDishStatement.setString(2, dish.name());
                 final int insertedRowsCount = insertDishStatement.executeUpdate();
                 if (insertedRowsCount != 1) {
                     connection().rollback();
@@ -139,7 +198,7 @@ public class DishDao {
             }
             try (PreparedStatement insertDishMealTimeStatement = connection().prepareStatement(INSERT_DISH_MEAL_TIME_QUERY)) {
                 for (MealTime mealTime : dish.suitableForMealTimes()) {
-                    insertDishMealTimeStatement.setString(1, dish.name());
+                    insertDishMealTimeStatement.setString(1, dish.publicId());
                     insertDishMealTimeStatement.setString(2, mealTime.toString());
                     final int insertedRowsCount = insertDishMealTimeStatement.executeUpdate();
                     if (insertedRowsCount != 1) {
@@ -158,9 +217,18 @@ public class DishDao {
         }
     }
 
-    public DishStoreEditable.RemoveStatus removeDish(String name) throws SQLException {
-        try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_QUERY)) {
+    public DishStoreEditable.RemoveStatus removeDishByName(String name) throws SQLException {
+        try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_BY_NAME_QUERY)) {
             deleteDishStatement.setString(1, name);
+            // we don't need to delete dish_meal_time because of "cascade" delete policy.
+            final int deletedRowsCount = deleteDishStatement.executeUpdate();
+            return deletedRowsCount == 1 ? DishStoreEditable.RemoveStatus.SUCCESS : DishStoreEditable.RemoveStatus.DOES_NOT_EXIST;
+        }
+    }
+
+    public DishStoreEditable.RemoveStatus removeDishById(String dishPublicId) throws SQLException {
+        try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_BY_ID_QUERY)) {
+            deleteDishStatement.setString(1, dishPublicId);
             // we don't need to delete dish_meal_time because of "cascade" delete policy.
             final int deletedRowsCount = deleteDishStatement.executeUpdate();
             return deletedRowsCount == 1 ? DishStoreEditable.RemoveStatus.SUCCESS : DishStoreEditable.RemoveStatus.DOES_NOT_EXIST;
