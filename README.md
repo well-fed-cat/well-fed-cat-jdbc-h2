@@ -12,6 +12,10 @@ for end-users.
 
 ## TODO ##
 
+* Add Utility.tprint...() method, which transliterate cyrillic 
+  on the fly, when printing. This should resolve problem with cyrillic,
+  when working from command line and still allow to have DB of normally
+  defined Russian dishes.
 * Add to DishStore methods `removeById` and `getById`.
 * Add api to modify dish (`update()` method, which replaces dish object
   by ID with provided object)
