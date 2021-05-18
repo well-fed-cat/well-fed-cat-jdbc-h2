@@ -12,9 +12,7 @@ for end-users.
 
 ## TODO ##
 
-* Add public id to DISH table, which is string of ascii character
-  used as abbreviation for the dish. Intended to be used, when manually
-  working with dishes database (using console or DB client).
+* Add to DishStore methods `removeById` and `getById`.
 * Add api to modify dish (`update()` method, which replaces dish object
   by ID with provided object)
 * Add api to modify dish public ID.
@@ -29,6 +27,21 @@ for end-users.
 * Create initialization of dishes DB in English.
 * Add automated tests.
 * Make DB-based dishStores check schema version.
+
+
+
+## Controlling probability of dish in the menu ##
+
+* dish has "active" flag. If false, then has probability 0.
+* base probability for each dish
+* if dish is close in history, it has reducing coef.
+* dish has tag. If dish with same tag in history, it has reducing coef.
+* dish has "suitable for days of week". On other days its probability is 0.
+
+* would be nice to distribute somehow meat, fish.
+* would be nice to add salads
+* would be nice to take into account child's preferences.
+
 
 
 ## Various hints ##
