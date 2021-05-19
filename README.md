@@ -12,7 +12,6 @@ for end-users.
 
 ## TODO ##
 
-* Add to DishStore methods `removeById` and `getById`.
 * Add api to modify dish (`update()` method, which replaces dish object
   by ID with provided object)
 * Add api to modify dish public ID.
