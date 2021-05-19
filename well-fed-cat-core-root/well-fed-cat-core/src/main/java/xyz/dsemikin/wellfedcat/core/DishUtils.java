@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class Utils {
+public class DishUtils {
 
     public static void printDishes(final List<Dish> dishes) {
         for (Dish dish : dishes) {
@@ -50,7 +50,6 @@ public class Utils {
 
     public static void printMenuT(final Menu menu) {
 
-//        Transliterator transliterator = Transliterator.getInstance("Latin-Russian/BGN");
         Transliterator transliterator = Transliterator.getInstance("Russian-Latin/BGN");
 
         System.out.println();

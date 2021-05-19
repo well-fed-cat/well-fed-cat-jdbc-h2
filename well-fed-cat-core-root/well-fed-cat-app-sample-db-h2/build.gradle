@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':well-fed-cat-utils')
     implementation project(':well-fed-cat-datamodel')
     implementation project(':well-fed-cat-core')
     implementation project(':well-fed-cat-datastore-db-h2')

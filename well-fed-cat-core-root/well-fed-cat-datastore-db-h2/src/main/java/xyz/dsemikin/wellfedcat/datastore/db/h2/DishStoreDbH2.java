@@ -28,36 +28,54 @@ public class DishStoreDbH2 implements
     @Override
     public List<Dish> all() {
         try {
-            return dishDao.allDishes();
+            return dishDao.all();
         } catch (SQLException e) {
             throw new DishStoreException("Failed to get all dishes.", e);
         }
     }
 
     @Override
-    public Optional<Dish> get(final String name) {
+    public Optional<Dish> getByName(final String name) {
         try {
-            return dishDao.dishByName(name);
+            return dishDao.getByName(name);
         } catch (SQLException e) {
             throw new DishStoreException("Failed to get the dish.", e);
         }
     }
 
     @Override
+    public Optional<Dish> getById(String publicId) {
+        try {
+            return dishDao.getById(publicId);
+        } catch (SQLException e) {
+            throw new DishStoreException("Failed to get the dish", e);
+        }
+    }
+
+    @Override
     public boolean add(final Dish dish) {
         try {
-            return dishDao.addDish(dish);
+            return dishDao.add(dish);
         } catch (SQLException e) {
             throw new DishStoreException("Failed to add dish.", e);
         }
     }
 
     @Override
-    public RemoveStatus remove(final String name) {
+    public RemoveStatus removeByName(final String name) {
         try {
-            return dishDao.removeDishByName(name);
+            return dishDao.removeByName(name);
         } catch (SQLException e) {
             throw new DishStoreException("Failed to remove dish", e);
+        }
+    }
+
+    @Override
+    public RemoveStatus removeById(String publicId) {
+        try {
+            return dishDao.removeById(publicId);
+        } catch (SQLException e) {
+            throw new DishStoreException("Failed to remote dish", e);
         }
     }
 

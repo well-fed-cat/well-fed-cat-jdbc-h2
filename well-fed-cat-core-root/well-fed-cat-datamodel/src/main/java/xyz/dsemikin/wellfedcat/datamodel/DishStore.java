@@ -24,7 +24,9 @@ public interface DishStore {
      *
      * @throws DishStoreException - Implementation specific.
      */
-    Optional<Dish> get(final String name);
+    Optional<Dish> getByName(final String name);
+
+    Optional<Dish> getById(final String publicId);
 
     // TODO: Rename get() -> getByName()
     // TODO: Add getById()

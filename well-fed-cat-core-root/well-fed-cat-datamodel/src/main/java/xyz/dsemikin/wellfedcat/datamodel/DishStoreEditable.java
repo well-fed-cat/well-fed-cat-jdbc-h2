@@ -31,7 +31,9 @@ public interface DishStoreEditable extends DishStore {
      *           referred to by some other objects or even if
      *           store does not support removal).
      */
-    RemoveStatus remove(final String name);
+    RemoveStatus removeByName(final String name);
+
+    RemoveStatus removeById(final String publicId);
 
     enum RemoveStatus {
         /** Dish was successfully removed. */

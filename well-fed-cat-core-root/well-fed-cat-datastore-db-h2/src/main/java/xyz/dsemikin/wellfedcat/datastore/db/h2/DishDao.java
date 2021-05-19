@@ -72,7 +72,7 @@ public class DishDao {
         this.connection = connection;
     }
 
-    public List<Dish> allDishes() throws SQLException {
+    public List<Dish> all() throws SQLException {
 
         try(PreparedStatement allDishesStatement = connection().prepareStatement(ALL_DISHES_QUERY)) {
 
@@ -111,7 +111,7 @@ public class DishDao {
         }
     }
 
-    public Optional<Dish> dishByName(final String dishName) throws SQLException {
+    public Optional<Dish> getByName(final String dishName) throws SQLException {
 
         try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_BY_NAME_QUERY)) {
 
@@ -143,7 +143,7 @@ public class DishDao {
 
     }
 
-    public Optional<Dish> dishById(final String dishPublicId) throws SQLException {
+    public Optional<Dish> getById(final String dishPublicId) throws SQLException {
 
         try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_BY_ID_QUERY)) {
 
@@ -174,14 +174,14 @@ public class DishDao {
         }
     }
 
-    public boolean addDish(Dish dish) throws SQLException {
+    public boolean add(Dish dish) throws SQLException {
         // This solution is not perfect. One can insert dish between we check and insert the dish.
         // But for now it is considered to be least evil. Alternatives would be:
         // - try to insert and catch exception. Exception is not JDBC standard, so it would make code
         //   significantly DB-dependent.
         // - check if there is some JDBC api to lock table. Maybe not, then we have same problem,
         //   as for point 1. But even if there is, then it still makes things too complicated.
-        if (this.dishByName(dish.name()).isPresent() || this.dishById(dish.publicId()).isPresent()) {
+        if (this.getByName(dish.name()).isPresent() || this.getById(dish.publicId()).isPresent()) {
             return false;
         }
         final boolean initialAutoCommit = connection().getAutoCommit();
@@ -217,7 +217,7 @@ public class DishDao {
         }
     }
 
-    public DishStoreEditable.RemoveStatus removeDishByName(String name) throws SQLException {
+    public DishStoreEditable.RemoveStatus removeByName(String name) throws SQLException {
         try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_BY_NAME_QUERY)) {
             deleteDishStatement.setString(1, name);
             // we don't need to delete dish_meal_time because of "cascade" delete policy.
@@ -226,7 +226,7 @@ public class DishDao {
         }
     }
 
-    public DishStoreEditable.RemoveStatus removeDishById(String dishPublicId) throws SQLException {
+    public DishStoreEditable.RemoveStatus removeById(String dishPublicId) throws SQLException {
         try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_BY_ID_QUERY)) {
             deleteDishStatement.setString(1, dishPublicId);
             // we don't need to delete dish_meal_time because of "cascade" delete policy.

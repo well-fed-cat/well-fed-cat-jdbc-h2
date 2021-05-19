@@ -55,8 +55,13 @@ public class DishStoreSimpleFile implements DishStoreEditable {
     }
 
     @Override
-    public Optional<Dish> get(String name) {
-        return inMemoryStore.get(name);
+    public Optional<Dish> getByName(String name) {
+        return inMemoryStore.getByName(name);
+    }
+
+    @Override
+    public Optional<Dish> getById(String publicId) {
+        return inMemoryStore.getById(publicId);
     }
 
     @Override
@@ -71,13 +76,23 @@ public class DishStoreSimpleFile implements DishStoreEditable {
     }
 
     @Override
-    public RemoveStatus remove(String name) {
+    public RemoveStatus removeByName(String name) {
         try {
-            final RemoveStatus status = inMemoryStore.remove(name);
+            final RemoveStatus status = inMemoryStore.removeByName(name);
             writeDishStoreToFile(filePath, inMemoryStore);
             return status;
         } catch (IOException e) {
             throw new DishStoreException("Failed to write dishes store file.", e);
+        }
+    }
+
+    @Override
+    public RemoveStatus removeById(String publicId) {
+        Optional<Dish> maybeDish = getById(publicId);
+        if (maybeDish.isPresent()) {
+            return removeByName(maybeDish.get().name());
+        } else {
+            return RemoveStatus.DOES_NOT_EXIST;
         }
     }
 }
