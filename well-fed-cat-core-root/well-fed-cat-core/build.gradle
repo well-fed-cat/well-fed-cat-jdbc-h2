@@ -14,4 +14,6 @@ dependencies {
     implementation project(':well-fed-cat-datastore-inmemory')
     implementation project(':well-fed-cat-datastore-simple-file')
     implementation project(':well-fed-cat-datastore-db-h2')
+
+    implementation 'com.ibm.icu:icu4j:69.1' // transliteration (used in Utils)
 }

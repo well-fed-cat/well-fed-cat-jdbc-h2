@@ -13,7 +13,7 @@ public class WellFedCatSampleAppDbH2 {
         final var dishStore = new DishStoreDbH2(dbFilePath);
         final var menuManager = new MenuManager(dishStore);
         final Menu menu = menuManager.generateWeekMenu(LocalDate.now());
-        Utils.printMenu(menu);
+        Utils.printMenuT(menu);
     }
 
 }
