@@ -25,8 +25,6 @@ public class DishUtils {
             if (maybeDate.isPresent()) {
                 LocalDate date = maybeDate.get();
                 stringBuilder.append(date).append(" - ").append(date.getDayOfWeek());
-            } else if (dayMenu.getMaybeDayOfWeek().isPresent()) {
-                stringBuilder.append(dayMenu.getMaybeDayOfWeek().get());
             }
             System.out.println(stringBuilder);
             System.out.print("Breakfast:");
@@ -61,8 +59,6 @@ public class DishUtils {
             if (maybeDate.isPresent()) {
                 LocalDate date = maybeDate.get();
                 stringBuilder.append(date).append(" - ").append(date.getDayOfWeek());
-            } else if (dayMenu.getMaybeDayOfWeek().isPresent()) {
-                stringBuilder.append(dayMenu.getMaybeDayOfWeek().get());
             }
             System.out.println(stringBuilder);
             System.out.print("Breakfast:");

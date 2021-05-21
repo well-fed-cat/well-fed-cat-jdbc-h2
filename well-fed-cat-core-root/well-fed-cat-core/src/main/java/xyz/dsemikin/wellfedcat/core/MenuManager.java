@@ -6,7 +6,6 @@ import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datamodel.Menu;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class MenuManager {
@@ -23,26 +22,6 @@ public class MenuManager {
             dayMenu.setLunch(pickNextDish(MealTime.LUNCH));
             dayMenu.setSupper(pickNextDish(MealTime.SUPPER));
         }
-    }
-
-    public Menu generateMenu(final int daysCount) {
-        Menu menu = new Menu();
-        for (int kk = 0; kk < daysCount; kk++) {
-            menu.add(new DayMenu());
-        }
-        fillMenu(menu);
-        return menu;
-    }
-
-    public Menu generateMenu(final DayOfWeek startDay, final int daysCount) {
-        Menu menu = new Menu();
-        DayOfWeek currentDay = startDay;
-        for (int kk = 0; kk < daysCount; kk++) {
-            menu.add(new DayMenu(currentDay));
-            currentDay = currentDay.plus(1);
-        }
-        fillMenu(menu);
-        return menu;
     }
 
     public Menu generateMenu(final LocalDate startDay, final int daysCount) {
