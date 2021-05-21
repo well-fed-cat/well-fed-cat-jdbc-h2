@@ -1,7 +1,9 @@
 package xyz.dsemikin.wellfedcat.core;
 
 import com.ibm.icu.text.Transliterator;
+import xyz.dsemikin.wellfedcat.datamodel.DayMenu;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.Menu;
 
 import java.time.LocalDate;
 import java.util.List;

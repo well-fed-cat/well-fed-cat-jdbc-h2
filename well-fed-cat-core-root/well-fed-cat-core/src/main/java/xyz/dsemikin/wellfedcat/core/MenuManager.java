@@ -1,9 +1,10 @@
 package xyz.dsemikin.wellfedcat.core;
 
+import xyz.dsemikin.wellfedcat.datamodel.DayMenu;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
-import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
+import xyz.dsemikin.wellfedcat.datamodel.Menu;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
