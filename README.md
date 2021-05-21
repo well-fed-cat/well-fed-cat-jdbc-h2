@@ -12,18 +12,17 @@ for end-users.
 
 ## TODO ##
 
-* Add api to modify dish (`update()` method, which replaces dish object
-  by ID with provided object)
-* Add api to modify dish public ID.
 * Add to the persistence model the way to save menu history, i.e.
   sequence of day-menus for each day in the past. We also would need
   a way to "accept" some menu and so to "commit" a menu into the history.
 * During generation of new menu the algorithm should take into account
   the saved history (probably depth can be specified).
-* Maybe we need some tools to clean up the history.
 * Add flag to dish to exclude it from using in menus.
-* Create initialization of dishes DB in Rus-Translit.
-* Create initialization of dishes DB in English.
+* Add string tags to dish. Reduce probability of dishes with same tag (if used recently).
+* Add api to modify dish (`update()` method, which replaces dish object
+  by ID with provided object)
+* Add api to modify dish public ID.
+* Maybe we need some tools to clean up the history.
 * Add automated tests.
 * Make DB-based dishStores check schema version.
 
