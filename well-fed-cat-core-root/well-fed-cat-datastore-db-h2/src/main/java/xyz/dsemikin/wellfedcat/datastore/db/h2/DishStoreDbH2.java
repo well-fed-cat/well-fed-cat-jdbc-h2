@@ -4,25 +4,17 @@ import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 
-import java.io.Closeable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class DishStoreDbH2 implements
-        DishStoreEditable,
-        Closeable
+        DishStoreEditable
 {
-    private final DbConnector dbConnector;
     private final DishDao dishDao;
 
-    public DishStoreDbH2(final String dbFilePath) {
-        try {
-            dbConnector = new DbConnector(dbFilePath);
-            dishDao = new DishDao(dbConnector.connection());
-        } catch (SQLException e) {
-            throw new DishStoreException("Failed to connect to database.", e);
-        }
+    public DishStoreDbH2(final DishDao dishDao) {
+        this.dishDao = dishDao;
     }
 
     @Override
@@ -77,10 +69,5 @@ public class DishStoreDbH2 implements
         } catch (SQLException e) {
             throw new DishStoreException("Failed to remote dish", e);
         }
-    }
-
-    @Override
-    public void close() {
-        dbConnector.close();
     }
 }
