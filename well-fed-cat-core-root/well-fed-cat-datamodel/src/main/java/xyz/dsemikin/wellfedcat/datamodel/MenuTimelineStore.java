@@ -25,4 +25,10 @@ public interface MenuTimelineStore {
 
     /** "Latest" date, which contains menu. `Optional.empty()` if this object does not have any Menus in it. */
     Optional<LocalDate> lastDate();
+
+    boolean hasMenuFor(final LocalDate date);
+
+    boolean overlapsWith(final Menu menu);
+
+    boolean overlapsWith(final DayMenu menu);
 }
