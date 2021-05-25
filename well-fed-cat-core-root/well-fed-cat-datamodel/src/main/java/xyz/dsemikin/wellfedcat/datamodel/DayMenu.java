@@ -1,80 +1,60 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class DayMenu {
 
-    private List<Dish> breakfast;
-    private List<Dish> lunch;
-    private List<Dish> supper;
-    private Optional<LocalDate> maybeDate;
-
-    public DayMenu() {
-        breakfast = new ArrayList<>();
-        lunch = new ArrayList<>();
-        supper = new ArrayList<>();
-        maybeDate = Optional.empty();
-    }
+    private DayMenuSimple dayMenu;
+    private LocalDate date;
 
     public DayMenu(final LocalDate date) {
-        this();
-        setDate(date);
+        dayMenu = new DayMenuSimple();
+        this.date = date;
     }
 
     /** Sets `date` of this object to given `date` and `dayOfWeek` of this object to corresponding day of week. */
     public void setDate(final LocalDate date) {
-        maybeDate = Optional.of(date);
+        this.date = date;
     }
 
-    public Optional<LocalDate> getMaybeDate() {
-        return maybeDate;
-    }
-
-    public void resetDate() {
-        maybeDate = Optional.empty();
+    public LocalDate getDate() {
+        return date;
     }
 
     public List<Dish> getBreakfast() {
-        return breakfast;
+        return dayMenu.getBreakfast();
     }
 
     public List<Dish> getLunch() {
-        return lunch;
+        return dayMenu.getLunch();
     }
 
     public List<Dish> getSupper() {
-        return supper;
+        return dayMenu.getSupper();
     }
 
     public void setBreakfast(final List<Dish> breakfast) {
-        this.breakfast = breakfast;
+        dayMenu.setBreakfast(breakfast);
     }
 
     public void setBreakfast(final Dish breakfastDish) {
-        breakfast = singletonArrayList(breakfastDish);
+        dayMenu.setBreakfast(breakfastDish);
     }
 
     public void setLunch(final List<Dish> lunch) {
-        this.lunch = lunch;
+        dayMenu.setLunch(lunch);
     }
 
     public void setLunch(final Dish lunchDish) {
-        lunch = singletonArrayList(lunchDish);
+        dayMenu.setLunch(lunchDish);
     }
 
     public void setSupper(List<Dish> supper) {
-        this.supper = supper;
+        dayMenu.setSupper(supper);
     }
 
     public void setSupper(final Dish supperDish) {
-        supper = singletonArrayList(supperDish);
-    }
-
-    private ArrayList<Dish> singletonArrayList(final Dish dish) {
-        return new ArrayList<>(Collections.singletonList(dish));
+        dayMenu.setSupper(supperDish);
     }
 }
