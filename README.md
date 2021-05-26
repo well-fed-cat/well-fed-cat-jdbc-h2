@@ -12,9 +12,8 @@ for end-users.
 
 ## TODO ##
 
-* Add to the persistence model the way to save menu history, i.e.
-  sequence of day-menus for each day in the past. We also would need
-  a way to "accept" some menu and so to "commit" a menu into the history.
+* Test MenuTimelineStoreSimpleFile (probably interactively).
+* Implement MenuTimelineStoreH2.
 * During generation of new menu the algorithm should take into account
   the saved history (probably depth can be specified).
 * Add flag to dish to exclude it from using in menus.

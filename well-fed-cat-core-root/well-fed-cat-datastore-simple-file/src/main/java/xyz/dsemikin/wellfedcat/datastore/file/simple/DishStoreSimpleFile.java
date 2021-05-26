@@ -17,73 +17,45 @@ import java.util.Optional;
 
 public class DishStoreSimpleFile implements DishStoreEditable {
 
-    final DishStoreInMemory inMemoryStore;
-    final Path filePath;
+    // The three objects: StoreObjectsProviderSimpleFile, MenuTimelineStoreSimpleFile and
+    // DishStoreSimple file - they are supposed to always exist together. Thus it is
+    // OK to have circular dependencies between those three.
+    // Alternative would be to have one object managing others (e.g. StoreObjectProviderSimpleFile),
+    // but in this case the clint would need to not forget to keep a reference to it
+    // while the actual "store objects" are being used.
+    private final StoreObjectProviderSimpleFile storeObjectsProvider;
 
-    public DishStoreSimpleFile(final Path filePath) {
-        this.filePath = filePath;
-        if (Files.exists(filePath)) {
-            inMemoryStore = readDishStoreFromFile(filePath);
-        } else {
-            inMemoryStore = new DishStoreInMemory();
-        }
-    }
-
-    private static DishStoreInMemory readDishStoreFromFile(final Path filePath) {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath.toFile()))) {
-            return (DishStoreInMemory) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new DishStoreException("Failed to read dishStore file", e);
-        }
-    }
-
-    public static void writeDishStoreToFile(
-            final Path filePath,
-            final DishStoreInMemory dishStore
-    ) throws IOException {
-        try (
-            ObjectOutputStream objectOutputStream =
-                    new ObjectOutputStream(new FileOutputStream(filePath.toFile()))
-        ) {
-            objectOutputStream.writeObject(dishStore);
-        }
+    public DishStoreSimpleFile(final StoreObjectProviderSimpleFile storeObjectsProvider) {
+        this.storeObjectsProvider = storeObjectsProvider;
     }
 
     @Override
     public List<Dish> all() {
-        return inMemoryStore.all();
+        return storeImpl().all();
     }
 
     @Override
     public Optional<Dish> getByName(String name) {
-        return inMemoryStore.getByName(name);
+        return storeImpl().getByName(name);
     }
 
     @Override
     public Optional<Dish> getById(String publicId) {
-        return inMemoryStore.getById(publicId);
+        return storeImpl().getById(publicId);
     }
 
     @Override
     public boolean add(Dish dish) {
-        try {
-            final boolean result = inMemoryStore.add(dish);
-            writeDishStoreToFile(filePath, inMemoryStore);
-            return result;
-        } catch (IOException e) {
-            throw new DishStoreException("Failed to write dishes store file.", e);
-        }
+        final boolean result = storeImpl().add(dish);
+        storeObjectsProvider.writeStoreObjectsToFile();
+        return result;
     }
 
     @Override
     public RemoveStatus removeByName(String name) {
-        try {
-            final RemoveStatus status = inMemoryStore.removeByName(name);
-            writeDishStoreToFile(filePath, inMemoryStore);
-            return status;
-        } catch (IOException e) {
-            throw new DishStoreException("Failed to write dishes store file.", e);
-        }
+        final RemoveStatus status = storeImpl().removeByName(name);
+        storeObjectsProvider.writeStoreObjectsToFile();
+        return status;
     }
 
     @Override
@@ -94,5 +66,9 @@ public class DishStoreSimpleFile implements DishStoreEditable {
         } else {
             return RemoveStatus.DOES_NOT_EXIST;
         }
+    }
+
+    private DishStoreInMemory storeImpl() {
+        return storeObjectsProvider.getDishStoreInMemory();
     }
 }

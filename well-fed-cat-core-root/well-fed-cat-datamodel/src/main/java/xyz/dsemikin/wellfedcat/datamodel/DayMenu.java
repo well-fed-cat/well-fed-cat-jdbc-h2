@@ -1,9 +1,10 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class DayMenu {
+public class DayMenu implements Serializable {
 
     private DayMenuSimple dayMenu;
     private LocalDate date;

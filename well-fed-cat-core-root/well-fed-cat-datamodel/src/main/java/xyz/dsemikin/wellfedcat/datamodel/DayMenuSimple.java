@@ -1,11 +1,12 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /** Day menu without date. */
-public class DayMenuSimple {
+public class DayMenuSimple implements Serializable {
 
     private List<Dish> breakfast;
     private List<Dish> lunch;

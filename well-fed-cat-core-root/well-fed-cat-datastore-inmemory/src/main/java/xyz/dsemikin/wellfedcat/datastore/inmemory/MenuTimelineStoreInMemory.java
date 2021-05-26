@@ -4,13 +4,18 @@ import xyz.dsemikin.wellfedcat.datamodel.DayMenu;
 import xyz.dsemikin.wellfedcat.datamodel.Menu;
 import xyz.dsemikin.wellfedcat.datamodel.MenuTimelineStoreEditable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class MenuTimelineStoreInMemory implements MenuTimelineStoreEditable {
+public class MenuTimelineStoreInMemory
+    implements
+        MenuTimelineStoreEditable,
+        Serializable
+{
 
     private final Map<LocalDate, DayMenu> menuTimeline;
 

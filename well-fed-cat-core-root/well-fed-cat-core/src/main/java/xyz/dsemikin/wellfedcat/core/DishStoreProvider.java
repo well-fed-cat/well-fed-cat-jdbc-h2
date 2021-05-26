@@ -4,6 +4,7 @@ import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datastore.file.simple.DishStoreSimpleFile;
+import xyz.dsemikin.wellfedcat.datastore.file.simple.StoreObjectProviderSimpleFile;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
 import java.nio.file.Path;
@@ -18,7 +19,8 @@ public class DishStoreProvider {
     }
 
     public static DishStoreEditable getDishStoreSimpleFileAndFillWithSampleData(final Path dishStoreFile) {
-        DishStoreSimpleFile dishStore = new DishStoreSimpleFile(dishStoreFile);
+        StoreObjectProviderSimpleFile storeObjectsProvider = new StoreObjectProviderSimpleFile(dishStoreFile);
+        DishStoreSimpleFile dishStore = storeObjectsProvider.getDishStore();
         return initializeDishStoreWithSampleData(dishStore);
     }
 
