@@ -113,3 +113,60 @@ values                ('LUNCH');
 
 insert into meal_time (name)
 values                ('SUPPER');
+
+
+-- ---------------------------------------------------------------------------
+--
+-- MENU_TIMELINE
+--
+-- This table corresponds to object xyz.dsemikin.wellfedcat.datamodel.MenuTimelineStore
+-- and represents "day menus" assigned to unique dates. Here "day menu" is
+-- set of dishes assigned to meal-times, i.e. breakfast/lunch/supper.
+-- Groups of the records from the table represent objects xyz.dsemikin.wellfedcat.datamodel.DayMenu.
+--
+-- To get names of dishes planned for breakfast on 2021-05-27 one would need to run
+-- query:
+--
+--     select dish.name
+--     from menu_timeline
+--     inner_join dish on menu_timeline.dish_public_id = dish.public_id
+--     where menu_date = DATE'2021-05-27' and meal_time = 'BREAKFAST'
+--     order by menu_timeline.dish_position
+--
+-- Each record defines one dish belonging to particular meal time
+-- on particular date. There should be no "day-menus" with the same
+-- date and one day-menu cannot have same dish on same meal-time more
+-- than once. Thus combination of menu_date, meal_time and dish_public_id
+-- is unique within the table (and used a primary key).
+--
+-- MENU_DATE - date to which dish of this record correspond (day of corresponding
+-- day-menu.
+--
+-- MEAL_TIME - meal-time to which dish of this record belongs within day-menu.
+--
+-- DISH_PUBLIC_ID - specifies dish of this record. Refers to DISH table.
+--
+-- DISH_POSITION - ordering of the dishes within the meal-time within the day-menu.
+-- No constraints are enforce on this field by the DB and client should not
+-- make any assumptions (e.g. it should not assume, that values are different),
+-- but when updating the table client should try to maintain proper ordering
+-- of dishes using this value.
+--
+
+create table menu_timeline (
+    menu_date      date        not null,
+    meal_time      varchar(10) not null,
+    dish_public_id varchar(50) not null,
+    dish_position  int         not null
+);
+
+create primary key menu_timeline_pkidx on menu_timeline (menu_date, meal_time, dish_public_id);
+alter table menu_timeline add constraint menu_timeline_pk primary key (menu_date, meal_time, dish_public_id);
+
+create index menu_timeline_idx_meal_time on menu_timeline (meal_time);
+alter table menu_timeline add constraint menu_timeline_fk_meal_time foreign key (meal_time) references meal_time (name);
+
+create index menu_timeline_idx_dish_public_id on menu_timeline (dish_public_id);
+alter table menu_timeline add constraint menu_timeline_fk_dish_public_id foreign key (dish_public_id) references dish (public_id);
+
+create index menu_timeline_idx_menu_date on menu_timeline (menu_date); -- we are going to search and filter by date a lot.
