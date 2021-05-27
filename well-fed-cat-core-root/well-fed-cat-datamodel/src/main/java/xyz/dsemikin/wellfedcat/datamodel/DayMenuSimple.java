@@ -3,7 +3,6 @@ package xyz.dsemikin.wellfedcat.datamodel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
