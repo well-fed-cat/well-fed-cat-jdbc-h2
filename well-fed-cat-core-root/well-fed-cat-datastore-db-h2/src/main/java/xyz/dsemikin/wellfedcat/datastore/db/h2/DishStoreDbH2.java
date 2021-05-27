@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("ClassCanBeRecord")
 public class DishStoreDbH2 implements
         DishStoreEditable
 {
