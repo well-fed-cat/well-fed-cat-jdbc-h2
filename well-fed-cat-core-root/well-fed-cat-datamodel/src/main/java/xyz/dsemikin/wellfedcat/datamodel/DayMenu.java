@@ -2,6 +2,7 @@ package xyz.dsemikin.wellfedcat.datamodel;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class DayMenu implements Serializable {
@@ -23,15 +24,15 @@ public class DayMenu implements Serializable {
         return date;
     }
 
-    public List<Dish> getBreakfast() {
+    public LinkedHashSet<Dish> getBreakfast() {
         return dayMenu.getBreakfast();
     }
 
-    public List<Dish> getLunch() {
+    public LinkedHashSet<Dish> getLunch() {
         return dayMenu.getLunch();
     }
 
-    public List<Dish> getSupper() {
+    public LinkedHashSet<Dish> getSupper() {
         return dayMenu.getSupper();
     }
 

@@ -3,55 +3,57 @@ package xyz.dsemikin.wellfedcat.datamodel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /** Day menu without date. */
 public class DayMenuSimple implements Serializable {
 
-    private List<Dish> breakfast;
-    private List<Dish> lunch;
-    private List<Dish> supper;
+    private LinkedHashSet<Dish> breakfast;
+    private LinkedHashSet<Dish> lunch;
+    private LinkedHashSet<Dish> supper;
 
     public DayMenuSimple() {
-        breakfast = new ArrayList<>();
-        lunch = new ArrayList<>();
-        supper = new ArrayList<>();
+        breakfast = new LinkedHashSet<>();
+        lunch = new LinkedHashSet<>();
+        supper = new LinkedHashSet<>();
     }
 
-    public List<Dish> getBreakfast() {
+    public LinkedHashSet<Dish> getBreakfast() {
         return breakfast;
     }
 
-    public List<Dish> getLunch() {
+    public LinkedHashSet<Dish> getLunch() {
         return lunch;
     }
 
-    public List<Dish> getSupper() {
+    public LinkedHashSet<Dish> getSupper() {
         return supper;
     }
 
     public void setBreakfast(final List<Dish> breakfast) {
-        this.breakfast = breakfast;
+        this.breakfast = new LinkedHashSet<>(breakfast);
     }
 
     public void setBreakfast(final Dish breakfastDish) {
-        breakfast = singletonArrayList(breakfastDish);
+        breakfast = new LinkedHashSet<>(singletonArrayList(breakfastDish));
     }
 
     public void setLunch(final List<Dish> lunch) {
-        this.lunch = lunch;
+        this.lunch = new LinkedHashSet<>(lunch);
     }
 
     public void setLunch(final Dish lunchDish) {
-        lunch = singletonArrayList(lunchDish);
+        lunch = new LinkedHashSet<>(singletonArrayList(lunchDish));
     }
 
     public void setSupper(List<Dish> supper) {
-        this.supper = supper;
+        this.supper = new LinkedHashSet<>(supper);
     }
 
     public void setSupper(final Dish supperDish) {
-        supper = singletonArrayList(supperDish);
+        supper = new LinkedHashSet<>(singletonArrayList(supperDish));
     }
 
     private ArrayList<Dish> singletonArrayList(final Dish dish) {
