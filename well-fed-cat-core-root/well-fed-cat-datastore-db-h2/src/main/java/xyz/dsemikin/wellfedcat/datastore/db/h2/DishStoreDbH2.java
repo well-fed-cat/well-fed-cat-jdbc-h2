@@ -2,7 +2,7 @@ package xyz.dsemikin.wellfedcat.datastore.db.h2;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
-import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
+import xyz.dsemikin.wellfedcat.datamodel.StoreException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,7 +23,7 @@ public class DishStoreDbH2 implements
         try {
             return dishDao.all();
         } catch (SQLException e) {
-            throw new DishStoreException("Failed to get all dishes.", e);
+            throw new StoreException("Failed to get all dishes.", e);
         }
     }
 
@@ -32,7 +32,7 @@ public class DishStoreDbH2 implements
         try {
             return dishDao.getByName(name);
         } catch (SQLException e) {
-            throw new DishStoreException("Failed to get the dish.", e);
+            throw new StoreException("Failed to get the dish.", e);
         }
     }
 
@@ -41,7 +41,7 @@ public class DishStoreDbH2 implements
         try {
             return dishDao.getById(publicId);
         } catch (SQLException e) {
-            throw new DishStoreException("Failed to get the dish", e);
+            throw new StoreException("Failed to get the dish", e);
         }
     }
 
@@ -50,7 +50,7 @@ public class DishStoreDbH2 implements
         try {
             return dishDao.add(dish);
         } catch (SQLException e) {
-            throw new DishStoreException("Failed to add dish.", e);
+            throw new StoreException("Failed to add dish.", e);
         }
     }
 
@@ -59,7 +59,7 @@ public class DishStoreDbH2 implements
         try {
             return dishDao.removeByName(name);
         } catch (SQLException e) {
-            throw new DishStoreException("Failed to remove dish", e);
+            throw new StoreException("Failed to remove dish", e);
         }
     }
 
@@ -68,7 +68,7 @@ public class DishStoreDbH2 implements
         try {
             return dishDao.removeById(publicId);
         } catch (SQLException e) {
-            throw new DishStoreException("Failed to remote dish", e);
+            throw new StoreException("Failed to remote dish", e);
         }
     }
 }

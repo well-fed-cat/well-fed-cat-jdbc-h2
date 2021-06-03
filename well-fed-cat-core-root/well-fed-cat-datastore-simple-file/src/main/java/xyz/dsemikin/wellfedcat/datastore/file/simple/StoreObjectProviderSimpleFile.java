@@ -1,6 +1,6 @@
 package xyz.dsemikin.wellfedcat.datastore.file.simple;
 
-import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
+import xyz.dsemikin.wellfedcat.datamodel.StoreException;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.MenuTimelineStoreInMemory;
 
@@ -50,7 +50,7 @@ public class StoreObjectProviderSimpleFile {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath.toFile()))) {
             objectOutputStream.writeObject(storeObjects);
         } catch (Exception e) {
-            throw new DishStoreException("Failed to write store objects to file.", e);
+            throw new StoreException("Failed to write store objects to file.", e);
         }
     }
 
@@ -58,7 +58,7 @@ public class StoreObjectProviderSimpleFile {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath.toFile()))) {
             return (StoreObjects) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            throw new DishStoreException("Failed to read store objects file", e);
+            throw new StoreException("Failed to read store objects file", e);
         }
     }
 

@@ -10,7 +10,7 @@ public interface DishStore {
      * @return List of all dishes in the store. List is empty if
      *         store is empty.
      *
-     * @throws DishStoreException - Implementation specific.
+     * @throws StoreException - Implementation specific.
      */
     List<Dish> all();
 
@@ -22,7 +22,7 @@ public interface DishStore {
      *           such a name. Otherwise `Optional` filled with found
      *           object.
      *
-     * @throws DishStoreException - Implementation specific.
+     * @throws StoreException - Implementation specific.
      */
     Optional<Dish> getByName(final String name);
 

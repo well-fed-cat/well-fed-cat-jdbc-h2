@@ -2,16 +2,8 @@ package xyz.dsemikin.wellfedcat.datastore.file.simple;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
-import xyz.dsemikin.wellfedcat.datamodel.DishStoreException;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
