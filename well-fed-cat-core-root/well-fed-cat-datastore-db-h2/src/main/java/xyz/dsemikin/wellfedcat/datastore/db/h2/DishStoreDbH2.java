@@ -38,11 +38,7 @@ public class DishStoreDbH2 implements
 
     @Override
     public Optional<Dish> getById(String publicId) {
-        try {
-            return dishDao.getById(publicId);
-        } catch (SQLException e) {
-            throw new StoreException("Failed to get the dish", e);
-        }
+        return dishDao.getById(publicId);
     }
 
     @Override

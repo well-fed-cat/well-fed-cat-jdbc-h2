@@ -43,7 +43,14 @@ public class StoreObjectFactoryH2 implements Closeable {
         return new DishStoreDbH2(dishDao);
     }
 
+    public MenuTimelineStoreH2 createMenuTimelineStore() {
+        final MenuTimelineDao menuTimelineDao = new MenuTimelineDao(connection);
+        final DishDao dishDao = new DishDao(connection);
+        final MenuTimelineService menuTimelineService = new MenuTimelineService(menuTimelineDao, dishDao);
+        return new MenuTimelineStoreH2(menuTimelineService);
+    }
 
+    /** After close() is called dishStore and menuTimelineStore created by this instance cannot be used anymore. */
     @Override
     public void close() {
         if (!isClosed) {

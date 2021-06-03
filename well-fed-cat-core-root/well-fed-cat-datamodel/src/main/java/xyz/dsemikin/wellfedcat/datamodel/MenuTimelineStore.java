@@ -14,6 +14,7 @@ import java.util.Optional;
  */
 public interface MenuTimelineStore {
 
+    // TODO: Don't return Optional<> - DayMenu itself can be empty
     /** Get menu for specified date. Returns `empty` if date does not have menu assigned. */
     Optional<DayMenu> menuFor(final LocalDate localDate);
 

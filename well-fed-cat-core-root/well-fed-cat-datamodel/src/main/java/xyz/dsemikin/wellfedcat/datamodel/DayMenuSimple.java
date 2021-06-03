@@ -55,7 +55,19 @@ public class DayMenuSimple implements Serializable {
         supper = new LinkedHashSet<>(singletonArrayList(supperDish));
     }
 
+    public boolean isEmpty() {
+        return breakfast.isEmpty() && lunch.isEmpty() && supper.isEmpty();
+    }
+
     private ArrayList<Dish> singletonArrayList(final Dish dish) {
         return new ArrayList<>(Collections.singletonList(dish));
+    }
+
+    public LinkedHashSet<Dish> get(final MealTime mealTime) {
+        return switch (mealTime) {
+            case BREAKFAST -> breakfast;
+            case LUNCH -> lunch;
+            case SUPPER -> supper;
+        };
     }
 }

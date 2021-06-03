@@ -24,6 +24,10 @@ public class DayMenu implements Serializable {
         return date;
     }
 
+    public LinkedHashSet<Dish> get(final MealTime mealTime) {
+        return dayMenu.get(mealTime);
+    }
+
     public LinkedHashSet<Dish> getBreakfast() {
         return dayMenu.getBreakfast();
     }
@@ -58,5 +62,9 @@ public class DayMenu implements Serializable {
 
     public void setSupper(final Dish supperDish) {
         dayMenu.setSupper(supperDish);
+    }
+
+    public boolean isEmpty() {
+        return dayMenu.isEmpty();
     }
 }

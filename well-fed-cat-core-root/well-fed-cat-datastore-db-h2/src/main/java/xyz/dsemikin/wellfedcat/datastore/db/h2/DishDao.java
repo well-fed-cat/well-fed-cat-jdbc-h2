@@ -3,6 +3,7 @@ package xyz.dsemikin.wellfedcat.datastore.db.h2;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
+import xyz.dsemikin.wellfedcat.datamodel.StoreException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,6 +72,8 @@ public class DishDao {
     public DishDao(final Connection connection) {
         this.connection = connection;
     }
+
+    // TODO: make methods of this class throw StoreException and not SQLException
 
     public List<Dish> all() throws SQLException {
 
@@ -143,7 +146,7 @@ public class DishDao {
 
     }
 
-    public Optional<Dish> getById(final String dishPublicId) throws SQLException {
+    public Optional<Dish> getById(final String dishPublicId) {
 
         try(PreparedStatement getDishStatement = connection().prepareStatement(SELECT_DISH_BY_ID_QUERY)) {
 
@@ -171,6 +174,8 @@ public class DishDao {
             }
 
             return Optional.of(new Dish(dishPublicId, dishName, mealTimes));
+        } catch (SQLException e) {
+            throw new StoreException("Failed to get dish by ID.", e);
         }
     }
 
