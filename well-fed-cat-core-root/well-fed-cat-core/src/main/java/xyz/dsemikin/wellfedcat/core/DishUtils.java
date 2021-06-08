@@ -7,9 +7,10 @@ import xyz.dsemikin.wellfedcat.datamodel.Menu;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public class DishUtils {
+
+    // TODO: Probably use Utils.translit() and remove external dependency
 
     public static void printDishes(final List<Dish> dishes) {
         for (Dish dish : dishes) {

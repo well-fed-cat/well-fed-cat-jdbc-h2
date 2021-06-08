@@ -12,7 +12,9 @@ for end-users.
 
 ## TODO ##
 
-* Implement MenuTimelineStoreH2.
+* Improve interactive work:
+  * For all datamodel classes implement meaningful toString()
+  * Implement dishStore.findById("textToSearch")
 * During generation of new menu the algorithm should take into account
   the saved history (probably depth can be specified).
 * Add "basic probability coefficient" to the dish to make it possible 

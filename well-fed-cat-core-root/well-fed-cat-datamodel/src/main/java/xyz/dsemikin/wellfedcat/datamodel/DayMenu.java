@@ -67,4 +67,9 @@ public class DayMenu implements Serializable {
     public boolean isEmpty() {
         return dayMenu.isEmpty();
     }
+
+    @Override
+    public String toString() {
+        return date.toString() + "\n" + dayMenu.toString();
+    }
 }

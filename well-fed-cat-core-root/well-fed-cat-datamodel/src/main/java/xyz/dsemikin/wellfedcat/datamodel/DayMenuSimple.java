@@ -1,10 +1,13 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
+import xyz.dsemikin.wellfedcat.utils.Utils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /** Day menu without date. */
 public class DayMenuSimple implements Serializable {
@@ -69,5 +72,32 @@ public class DayMenuSimple implements Serializable {
             case LUNCH -> lunch;
             case SUPPER -> supper;
         };
+    }
+
+    @Override
+    public String toString() {
+        BiConsumer<Dish, StringBuilder> appendDish =
+                (final Dish dish, final StringBuilder sb) -> {
+                    sb
+                            .append("[").append(dish.publicId()).append("] ")
+                            .append(Utils.translit(dish.name())).append(", ");
+                    sb.delete(sb.length()-2, sb.length());
+                };
+
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("B:  ");
+        getBreakfast().forEach(dish -> appendDish.accept(dish, stringBuilder));
+        stringBuilder.append("\n");
+
+        stringBuilder.append("L:  ");
+        getLunch().forEach(dish -> appendDish.accept(dish, stringBuilder));
+        stringBuilder.append("\n");
+
+        stringBuilder.append("S:  ");
+        getSupper().forEach(dish -> appendDish.accept(dish, stringBuilder));
+        stringBuilder.append("\n");
+
+        return stringBuilder.toString();
     }
 }

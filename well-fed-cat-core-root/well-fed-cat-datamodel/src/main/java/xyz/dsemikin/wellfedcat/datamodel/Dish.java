@@ -1,5 +1,7 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
+import xyz.dsemikin.wellfedcat.utils.Utils;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -30,5 +32,15 @@ public record Dish(
         if (name.length() > MAX_DISH_NAME_LENGTH) {
             throw new IllegalArgumentException("Max allowed length of dish name is " + MAX_DISH_NAME_LENGTH);
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder string = new StringBuilder(publicId() + " : " + Utils.translit(name()) + " : ");
+        for (var mealTime : suitableForMealTimes()) {
+            string.append(mealTime).append(", ");
+        }
+        string.delete(string.length()-2, string.length());
+        return string.toString();
     }
 }
