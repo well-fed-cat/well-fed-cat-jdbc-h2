@@ -3,6 +3,8 @@ package xyz.dsemikin.wellfedcat.datamodel;
 import xyz.dsemikin.wellfedcat.utils.Utils;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public record Dish(
@@ -14,6 +16,10 @@ public record Dish(
 {
 
     public static final int MAX_DISH_NAME_LENGTH = 100; // must be coherent with DB schema
+
+    public static Dish make(final String publicId, final String name, MealTime... mealTimes) {
+        return new Dish(publicId, name, new LinkedHashSet<>(Arrays.asList(mealTimes)));
+    }
 
     public Dish {
         // TODO: Check, that arguments are not empty

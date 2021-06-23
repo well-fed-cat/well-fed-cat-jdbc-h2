@@ -10,5 +10,7 @@ repositories {
 }
 
 dependencies {
+
     implementation project(':well-fed-cat-utils')
+
 }
