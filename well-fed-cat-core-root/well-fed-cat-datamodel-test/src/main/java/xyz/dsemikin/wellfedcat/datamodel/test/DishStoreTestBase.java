@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishStore;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +11,6 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static xyz.dsemikin.wellfedcat.datamodel.MealTime.BREAKFAST;
-import static xyz.dsemikin.wellfedcat.datamodel.MealTime.LUNCH;
-import static xyz.dsemikin.wellfedcat.datamodel.MealTime.SUPPER;
 
 /**
  * This class provides implementation of tests for checking
@@ -35,19 +31,7 @@ public abstract class DishStoreTestBase {
      * fill the store.
      */
     protected List<Dish> expectedDishes() {
-        final List<Dish> expectedDishes = new ArrayList<>();
-
-        expectedDishes.add(Dish.make("boiled_eggs", "Boiled Eggs", BREAKFAST, SUPPER));
-        expectedDishes.add(Dish.make("sandwich", "Sandwich", BREAKFAST, SUPPER));
-        expectedDishes.add(Dish.make("granola", "Granola", BREAKFAST));
-        expectedDishes.add(Dish.make("omelette", "Omelette", SUPPER));
-        expectedDishes.add(Dish.make("yoghurt", "Yoghurt", BREAKFAST));
-        expectedDishes.add(Dish.make("oatmeal", "Oatmeal", SUPPER));
-        expectedDishes.add(Dish.make("steak", "Steak", LUNCH));
-        expectedDishes.add(Dish.make("pasta_carbonara", "Pasta Carbonara", LUNCH, SUPPER));
-        expectedDishes.add(Dish.make("pizza", "Pizza", BREAKFAST, LUNCH, SUPPER));
-
-        return expectedDishes;
+        return ExpectedDishesProvider.getExpectedDishes();
     }
 
     /**

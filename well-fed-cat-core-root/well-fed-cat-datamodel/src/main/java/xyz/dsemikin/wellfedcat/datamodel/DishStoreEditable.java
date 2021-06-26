@@ -44,6 +44,4 @@ public interface DishStoreEditable extends DishStore {
         CANNOT_BE_DELETED
     }
 
-    // TODO: Rename remove -> removeByName()
-    // TODO: removeById()
 }
