@@ -1,7 +1,5 @@
 package xyz.dsemikin.wellfedcat.datastore.inmemory.test;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
@@ -14,6 +12,7 @@ import java.util.List;
 
 public class DishStoreInMemoryTest extends DishStoreTestBase {
 
+    @SuppressWarnings("unused")
     private final static Logger LOGGER = LoggerFactory.getLogger(DishStoreInMemoryTest.class);
 
     @Override
@@ -26,12 +25,6 @@ public class DishStoreInMemoryTest extends DishStoreTestBase {
             dishStore.add(expectedDish);
         }
         return dishStore;
-    }
-
-    @Test
-    public void otherTest() {
-        LOGGER.info("We are in the test!!!!!");
-        Assertions.assertTrue(true);
     }
 
 }

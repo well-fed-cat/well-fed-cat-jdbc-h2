@@ -7,9 +7,11 @@ import xyz.dsemikin.wellfedcat.datamodel.DishStore;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static xyz.dsemikin.wellfedcat.datamodel.MealTime.BREAKFAST;
 import static xyz.dsemikin.wellfedcat.datamodel.MealTime.LUNCH;
 import static xyz.dsemikin.wellfedcat.datamodel.MealTime.SUPPER;
@@ -54,11 +56,59 @@ public abstract class DishStoreTestBase {
     protected abstract DishStore getDishStore();
 
     @Test
-    public void dummyTest() {
+    public void test_all() {
         final DishStore dishStore = getDishStore();
         List<Dish> allDishes = dishStore.all();
         Set<Dish> actualDishes = new HashSet<>(allDishes);
         Set<Dish> expectedDishes = new HashSet<>(expectedDishes());
         assertEquals(expectedDishes, actualDishes);
+    }
+
+    @Test
+    public void test_getByName_exists() {
+        final String dishName = "Pasta Carbonara";
+        final DishStore dishStore = getDishStore();
+        Optional<Dish> maybeActualDish = dishStore.getByName(dishName);
+        assertTrue(maybeActualDish.isPresent());
+        final Dish actualDish = maybeActualDish.get();
+
+        //noinspection OptionalGetWithoutIsPresent
+        final Dish expectedDish = expectedDishes().stream()
+                .filter(dish -> dish.name().equals(dishName))
+                .findFirst().get();
+
+        assertEquals(expectedDish, actualDish);
+    }
+
+    @Test
+    public void test_getByName_notExist() {
+        final String dishName = "Pasta Bolognese";
+        final DishStore dishStore = getDishStore();
+        Optional<Dish> maybeActualDish = dishStore.getByName(dishName);
+        assertTrue(maybeActualDish.isEmpty());
+    }
+
+    @Test
+    public void test_getById_exists() {
+        final String dishId = "granola";
+        final DishStore dishStore = getDishStore();
+        Optional<Dish> maybeActualDish = dishStore.getById(dishId);
+        assertTrue(maybeActualDish.isPresent());
+        final Dish actualDish = maybeActualDish.get();
+
+        //noinspection OptionalGetWithoutIsPresent
+        final Dish expectedDish = expectedDishes().stream()
+                .filter(dish -> dish.publicId().equals(dishId))
+                .findFirst().get();
+
+        assertEquals(expectedDish, actualDish);
+    }
+
+    @Test
+    public void test_getById_notExist() {
+        final String dishId = "pelmeni";
+        final DishStore dishStore = getDishStore();
+        Optional<Dish> maybeActualDish = dishStore.getById(dishId);
+        assertTrue(maybeActualDish.isEmpty());
     }
 }

@@ -9,8 +9,6 @@ public interface DishStore {
      *
      * @return List of all dishes in the store. List is empty if
      *         store is empty.
-     *
-     * @throws StoreException - Implementation specific.
      */
     List<Dish> all();
 
@@ -21,14 +19,9 @@ public interface DishStore {
      * @return - Empty `Optional`, if store does not contain dish with
      *           such a name. Otherwise `Optional` filled with found
      *           object.
-     *
-     * @throws StoreException - Implementation specific.
      */
     Optional<Dish> getByName(final String name);
 
     Optional<Dish> getById(final String publicId);
-
-    // TODO: Rename get() -> getByName()
-    // TODO: Add getById()
 
 }
