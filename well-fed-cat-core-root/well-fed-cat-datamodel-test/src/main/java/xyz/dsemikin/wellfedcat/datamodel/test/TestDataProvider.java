@@ -1,5 +1,6 @@
 package xyz.dsemikin.wellfedcat.datamodel.test;
 
+import xyz.dsemikin.wellfedcat.datamodel.DayMenu;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 
 import java.util.ArrayList;
@@ -9,9 +10,9 @@ import static xyz.dsemikin.wellfedcat.datamodel.MealTime.BREAKFAST;
 import static xyz.dsemikin.wellfedcat.datamodel.MealTime.LUNCH;
 import static xyz.dsemikin.wellfedcat.datamodel.MealTime.SUPPER;
 
-/*package*/ class ExpectedDishesProvider {
+public class TestDataProvider {
 
-    public static List<Dish> getExpectedDishes() {
+    public List<Dish> expectedDishes() {
         final List<Dish> expectedDishes = new ArrayList<>();
 
         expectedDishes.add(Dish.make("boiled_eggs", "Boiled Eggs", BREAKFAST, SUPPER));
@@ -27,5 +28,8 @@ import static xyz.dsemikin.wellfedcat.datamodel.MealTime.SUPPER;
         return expectedDishes;
     }
 
-    private ExpectedDishesProvider() { /* prohibited */ }
+    public List<DayMenu> expectedDayMenus() {
+        // TODO
+        return new ArrayList<>();
+    }
 }

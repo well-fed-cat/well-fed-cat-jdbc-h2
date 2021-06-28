@@ -22,6 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public abstract class DishStoreTestBase {
 
+    protected TestDataProvider testDataProvider() {
+        return new TestDataProvider();
+    }
+
     /**
      * This method returns list of Dish objects expected to be
      * stored in the DishStore for the tests (and ONLY these
@@ -30,8 +34,8 @@ public abstract class DishStoreTestBase {
      * Implementations of this class must use this method to
      * fill the store.
      */
-    protected List<Dish> expectedDishes() {
-        return ExpectedDishesProvider.getExpectedDishes();
+    private List<Dish> expectedDishes() {
+        return testDataProvider().expectedDishes();
     }
 
     /**

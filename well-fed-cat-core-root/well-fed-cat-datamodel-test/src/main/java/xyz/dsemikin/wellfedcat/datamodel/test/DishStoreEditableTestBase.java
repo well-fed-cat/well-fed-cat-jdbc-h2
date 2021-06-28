@@ -18,15 +18,19 @@ import static xyz.dsemikin.wellfedcat.datamodel.MealTime.SUPPER;
 
 public abstract class DishStoreEditableTestBase {
 
-    protected List<Dish> expectedDishes() {
-        return ExpectedDishesProvider.getExpectedDishes();
-    }
-
     // If DishStore and MenuTimelineStore are dependent
     // (like for SQL DB based store), both stores should
     // be created and filled, so that the interdependencies
     // are properly captured.
     protected abstract DishStoreEditable getDishStore();
+
+    protected TestDataProvider testDataProvider() {
+        return new TestDataProvider();
+    }
+
+    private List<Dish> expectedDishes() {
+        return testDataProvider().expectedDishes();
+    }
 
     @Test
     public void test_add_notExists() {
