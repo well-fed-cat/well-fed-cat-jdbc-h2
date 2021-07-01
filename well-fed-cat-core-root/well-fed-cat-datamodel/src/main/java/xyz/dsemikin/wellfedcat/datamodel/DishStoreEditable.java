@@ -27,21 +27,22 @@ public interface DishStoreEditable extends DishStore {
      * @return - `SUCCESS`, if dish was removed,
      *           `DOES_NOT_EXIST`, if dish with given name does not
      *           exist, and `CANNOT_BE_DELETED`, if dish cannot be
-     *           deleted because of some constraints (e.g. it is
-     *           referred to by some other objects or even if
-     *           store does not support removal).
+     *           deleted because it is used in menu timeline store.
      */
     RemoveStatus removeByName(final String name);
 
     RemoveStatus removeById(final String publicId);
+
+    // TODO: updateDish (overwrites existing dish with the same publicId).
+    // TODO: For this we need Dish versioning, "dirty" and "renaming" for dishes.
 
     enum RemoveStatus {
         /** Dish was successfully removed. */
         SUCCESS,
         /** Dish was not removed, because it does not exist. */
         DOES_NOT_EXIST,
-        /** Dish was not removed, because it would vialate some constraints (e.g. record is referenced by other records in SQL DB). */
-        CANNOT_BE_DELETED
+        /** Dish was not removed, because it referenced (used) in menu timeline store. */
+        USED_IN_MENU_TIMELINE
     }
 
 }
