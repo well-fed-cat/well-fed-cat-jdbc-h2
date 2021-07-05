@@ -12,6 +12,11 @@ for end-users.
 
 ## TODO ##
 
+* Implement automated tests.
+  * Implement them for all store-implementations.
+  * Create spec of how stores should work together.
+  * Make store implementations compliant with the spec.
+  * Fix problem with over-writing DayMenus in MenuTimelineStore
 * Improve interactive work:
   * For all datamodel classes implement meaningful toString()
   * Implement dishStore.findById("textToSearch")
