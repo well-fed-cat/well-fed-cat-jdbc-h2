@@ -1,4 +1,4 @@
-package xyz.dsemikin.wellfedcat.datamodel.impl;
+package xyz.dsemikin.wellfedcat.datamodel.implementation;
 
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 

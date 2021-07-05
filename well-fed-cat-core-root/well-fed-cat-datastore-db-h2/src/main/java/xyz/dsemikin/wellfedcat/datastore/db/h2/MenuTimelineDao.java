@@ -6,7 +6,7 @@ import xyz.dsemikin.wellfedcat.datamodel.DayMenu;
 import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datamodel.MenuTimelineStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.StoreException;
-import xyz.dsemikin.wellfedcat.datamodel.impl.DayMenuSkeleton;
+import xyz.dsemikin.wellfedcat.datamodel.implementation.DayMenuSkeleton;
 
 import java.sql.Connection;
 import java.sql.Date;

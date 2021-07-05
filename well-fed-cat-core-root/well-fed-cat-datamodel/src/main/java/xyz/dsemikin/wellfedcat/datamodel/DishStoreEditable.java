@@ -1,5 +1,34 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
+/**
+ * <p>
+ *     Any implementation should respect these additional requirements:
+ * </p>
+ *
+ * <ul>
+ *     <li>
+ *         If the dish with particular public id and name was deleted, it
+ *         should be possible to use them again (independently) for other
+ *         dishes.
+ *     </li>
+ *     <li>
+ *         Same is valid, if dish name or public id was changed, - the old
+ *         value is allowed to be reused by other dishes.
+ *     </li>
+ * </ul>
+ *
+ * <h3>Interaction with {@code MenuTimelineStore}</h3>
+ * <p>
+ *     Even though {@code DishStoreEditable} does not explicitly refer to
+ *     {@link MenuTimelineStore} or {@link MenuTimelineStoreEditable}, their
+ *     behavior together should be explicitly specified to ensure consistent
+ *     behavior of different implementations of these stores.
+ *
+ *     See documentation for {@link MenuTimelineStoreEditable} for additional
+ *     constraints interaction of this class with {@link MenuTimelineStore}
+ *     and {@link MenuTimelineStoreEditable}.
+ * </p>
+ */
 public interface DishStoreEditable extends DishStore {
 
     /** Add dish to store if possible.
@@ -8,10 +37,10 @@ public interface DishStoreEditable extends DishStore {
      * constraint (e.g. this dish-name is already used), then
      * dish is not added and `false` is returned.
      *
-     * @param dish - Definition of dish to add to the store.
+     * @param dish  Definition of dish to add to the store.
      *
-     * @return - `true` if dish was successfully added.
-     *           `false` if some "unique"-constraint was
+     * @return  {@code true} if dish was successfully added.
+     *          {@code false} if some "unique"-constraint was
      *           violated and thus the dish was not added
      *           (e.g. another dish with this name already
      *           exists. Later another constraints may be
@@ -23,14 +52,28 @@ public interface DishStoreEditable extends DishStore {
 
     /** Remove dish from store, if possible.
      *
-     * @param name - name of the dish to be removed from store.
-     * @return - `SUCCESS`, if dish was removed,
-     *           `DOES_NOT_EXIST`, if dish with given name does not
-     *           exist, and `CANNOT_BE_DELETED`, if dish cannot be
-     *           deleted because it is used in menu timeline store.
+     * @param name   name of the dish to be removed from store.
+     * @return   {@link RemoveStatus#SUCCESS}, if dish was removed,
+     *           {@link RemoveStatus#DOES_NOT_EXIST}, if dish with given name
+     *           does not exist, and
+     *           {@link RemoveStatus#USED_IN_MENU_TIMELINE}, if dish cannot
+     *           be deleted because it is used in menu timeline store.
+     *           If dish cannot be deleted because of some other reason,
+     *           some exception will be thrown (implementation specific).
      */
     RemoveStatus removeByName(final String name);
 
+    /** Remove dish from store, if possible.
+     *
+     * @param publicId   public id of the dish to be removed from store.
+     * @return   {@link RemoveStatus#SUCCESS}, if dish was removed,
+     *           {@link RemoveStatus#DOES_NOT_EXIST}, if dish with given name
+     *           does not exist, and
+     *           {@link RemoveStatus#USED_IN_MENU_TIMELINE}, if dish cannot
+     *           be deleted because it is used in menu timeline store.
+     *           If dish cannot be deleted because of some other reason,
+     *           some exception will be thrown (implementation specific).
+     */
     RemoveStatus removeById(final String publicId);
 
     // TODO: updateDish (overwrites existing dish with the same publicId).
@@ -41,7 +84,7 @@ public interface DishStoreEditable extends DishStore {
         SUCCESS,
         /** Dish was not removed, because it does not exist. */
         DOES_NOT_EXIST,
-        /** Dish was not removed, because it referenced (used) in menu timeline store. */
+        /** Dish was not removed, because it is referenced (used) in menu timeline store. */
         USED_IN_MENU_TIMELINE
     }
 

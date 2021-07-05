@@ -3,6 +3,14 @@ package xyz.dsemikin.wellfedcat.datamodel;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * See important notes about implementation of {@code DishStore}
+ * and {@code DishStoreEditable} in the descripton of the
+ * {@link DishStoreEditable} interface.
+ *
+ * @see DishStoreEditable
+ * @see xyz.dsemikin.wellfedcat.datamodel
+ */
 public interface DishStore {
 
     /** Returns all dishes in store as a list

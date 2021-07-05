@@ -8,7 +8,7 @@ import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datamodel.Menu;
 import xyz.dsemikin.wellfedcat.datamodel.MenuTimelineStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.StoreException;
-import xyz.dsemikin.wellfedcat.datamodel.impl.DayMenuSkeleton;
+import xyz.dsemikin.wellfedcat.datamodel.implementation.DayMenuSkeleton;
 
 import java.time.LocalDate;
 import java.util.List;
