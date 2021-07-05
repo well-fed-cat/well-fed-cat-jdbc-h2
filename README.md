@@ -41,6 +41,7 @@ for end-users.
 * Make DB-based dishStores check schema version.
 * Try to use java modules
 * Try to properly encapsulate implementation details and restrict visibility.
+* Make Javadoc combined from all submodules.
 
 
 
