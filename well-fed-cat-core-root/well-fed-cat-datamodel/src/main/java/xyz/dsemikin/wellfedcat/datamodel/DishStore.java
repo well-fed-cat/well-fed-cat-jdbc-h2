@@ -30,6 +30,12 @@ public interface DishStore {
      */
     Optional<Dish> getByName(final String name);
 
+    /**
+     * Get dish from store by its public id.
+     *
+     * @param publicId  public id, which identifies the dish to get.
+     * @return  dish from store with given public id.
+     */
     Optional<Dish> getById(final String publicId);
 
 }

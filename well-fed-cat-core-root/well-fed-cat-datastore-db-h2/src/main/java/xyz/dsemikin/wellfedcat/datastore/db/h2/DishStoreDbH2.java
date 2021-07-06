@@ -1,6 +1,7 @@
 package xyz.dsemikin.wellfedcat.datastore.db.h2;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.DishModified;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datamodel.StoreException;
 
@@ -66,5 +67,11 @@ public class DishStoreDbH2 implements
         } catch (SQLException e) {
             throw new StoreException("Failed to remote dish", e);
         }
+    }
+
+    @Override
+    public void updateDish(DishModified newDishVersion) {
+        // TODO
+        throw new RuntimeException("Not implemented yet");
     }
 }

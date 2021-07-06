@@ -76,8 +76,20 @@ public interface DishStoreEditable extends DishStore {
      */
     RemoveStatus removeById(final String publicId);
 
-    // TODO: updateDish (overwrites existing dish with the same publicId).
-    // TODO: For this we need Dish versioning, "dirty" and "renaming" for dishes.
+    /**
+     * Using this method it is possible to change some parameters of the dish.
+     *
+     * For this one needs to get dish from store and then modify it using
+     * "update" methods and then update it in the store using this method.
+     *
+     * If it is for some reason not possible to update the dish, then
+     * implementation specific exceptions may be thrown.
+     *
+     * @param newDishVersion  updated version of the dish. Obtain by
+     *                        getting dish from the store and then using
+     *                        "update"-methods on it.
+     */
+    void updateDish(final DishModified newDishVersion);
 
     enum RemoveStatus {
         /** Dish was successfully removed. */

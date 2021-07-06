@@ -1,6 +1,7 @@
 package xyz.dsemikin.wellfedcat.datastore.file.simple;
 
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
+import xyz.dsemikin.wellfedcat.datamodel.DishModified;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
@@ -58,6 +59,12 @@ public class DishStoreSimpleFile implements DishStoreEditable {
         } else {
             return RemoveStatus.DOES_NOT_EXIST;
         }
+    }
+
+    @Override
+    public void updateDish(DishModified newDishVersion) {
+        // TODO
+        throw new RuntimeException("Not implemented yet");
     }
 
     private DishStoreInMemory storeImpl() {
