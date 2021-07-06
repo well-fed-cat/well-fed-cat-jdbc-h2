@@ -85,6 +85,9 @@ public interface DishStoreEditable extends DishStore {
      * If it is for some reason not possible to update the dish, then
      * implementation specific exceptions may be thrown.
      *
+     * Implementation should use {@link DishModified#oldPublicId()} to
+     * search for the dish in the store, which is to be updated.
+     *
      * @param newDishVersion  updated version of the dish. Obtain by
      *                        getting dish from the store and then using
      *                        "update"-methods on it.
