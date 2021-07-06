@@ -73,7 +73,7 @@ public class DishStoreInMemory
     }
 
     @Override
-    public void updateDish(DishModified newDishVersion) {
+    public UpdateStatus updateDish(DishModified newDishVersion) {
         // TODO
         throw new RuntimeException("Not implemented yet");
     }

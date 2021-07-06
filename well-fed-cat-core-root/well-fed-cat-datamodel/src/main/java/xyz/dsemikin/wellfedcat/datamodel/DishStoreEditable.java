@@ -88,8 +88,9 @@ public interface DishStoreEditable extends DishStore {
      * @param newDishVersion  updated version of the dish. Obtain by
      *                        getting dish from the store and then using
      *                        "update"-methods on it.
+     * @return See description of the {@link UpdateStatus} values.
      */
-    void updateDish(final DishModified newDishVersion);
+    UpdateStatus updateDish(final DishModified newDishVersion);
 
     enum RemoveStatus {
         /** Dish was successfully removed. */
@@ -98,6 +99,23 @@ public interface DishStoreEditable extends DishStore {
         DOES_NOT_EXIST,
         /** Dish was not removed, because it is referenced (used) in menu timeline store. */
         USED_IN_MENU_TIMELINE
+    }
+
+    enum UpdateStatus {
+        /** Dish was updated successfully. */
+        SUCCESS,
+        /**
+         * Version of the new dish must be version of the original dish +1.
+         * This code is returned, if this condition does not hold (usually
+         * happens, if tried to update from the same version more than one
+         * time).
+         */
+        VERSION_MISMATCH,
+        /**
+         * Dish with the same public id was not found in the store.
+         * Probably it was deleted.
+         */
+        NOT_FOUND
     }
 
 }
