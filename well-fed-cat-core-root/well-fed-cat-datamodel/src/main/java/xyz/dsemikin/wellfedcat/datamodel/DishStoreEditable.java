@@ -17,6 +17,22 @@ package xyz.dsemikin.wellfedcat.datamodel;
  *     </li>
  * </ul>
  *
+ * <p>
+ *     Note: Possibility to change and reuse public ids and names
+ *     means, that the system does not enforce validity
+ *     of external references to the dishes. If public ID was saved
+ *     outside the system and then was used to retrieve the dish,
+ *     it is not guaranteed, that the dish will be the same or will
+ *     exist at all.
+ * </p>
+ *
+ * <p>
+ *     To enforce it we would need to include "constant-quasi-unique-id",
+ *     (one could call it "strong-id") which would be generated
+ *     in such a way, that it is quasi-globally-unique
+ *     (e.g. UUID) and it is not allowed to be reused ever.
+ * </p>
+ *
  * <h3>Interaction with {@code MenuTimelineStore}</h3>
  * <p>
  *     Even though {@code DishStoreEditable} does not explicitly refer to
