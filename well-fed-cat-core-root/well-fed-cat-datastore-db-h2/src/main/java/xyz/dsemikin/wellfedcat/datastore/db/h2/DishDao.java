@@ -222,21 +222,21 @@ public class DishDao {
         }
     }
 
-    public DishStoreEditable.RemoveStatus removeByName(String name) throws SQLException {
+    public DishStoreEditable.DeleteStatus removeByName(String name) throws SQLException {
         try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_BY_NAME_QUERY)) {
             deleteDishStatement.setString(1, name);
             // we don't need to delete dish_meal_time because of "cascade" delete policy.
             final int deletedRowsCount = deleteDishStatement.executeUpdate();
-            return deletedRowsCount == 1 ? DishStoreEditable.RemoveStatus.SUCCESS : DishStoreEditable.RemoveStatus.DOES_NOT_EXIST;
+            return deletedRowsCount == 1 ? DishStoreEditable.DeleteStatus.SUCCESS : DishStoreEditable.DeleteStatus.DOES_NOT_EXIST;
         }
     }
 
-    public DishStoreEditable.RemoveStatus removeById(String dishPublicId) throws SQLException {
+    public DishStoreEditable.DeleteStatus removeById(String dishPublicId) throws SQLException {
         try (PreparedStatement deleteDishStatement = connection().prepareStatement(DELETE_DISH_BY_ID_QUERY)) {
             deleteDishStatement.setString(1, dishPublicId);
             // we don't need to delete dish_meal_time because of "cascade" delete policy.
             final int deletedRowsCount = deleteDishStatement.executeUpdate();
-            return deletedRowsCount == 1 ? DishStoreEditable.RemoveStatus.SUCCESS : DishStoreEditable.RemoveStatus.DOES_NOT_EXIST;
+            return deletedRowsCount == 1 ? DishStoreEditable.DeleteStatus.SUCCESS : DishStoreEditable.DeleteStatus.DOES_NOT_EXIST;
         }
     }
 

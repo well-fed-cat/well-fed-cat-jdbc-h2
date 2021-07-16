@@ -1,5 +1,9 @@
 package xyz.dsemikin.wellfedcat.datamodel;
 
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
 /**
  * <p>
  *     Any implementation should respect these additional requirements:
@@ -47,50 +51,94 @@ package xyz.dsemikin.wellfedcat.datamodel;
  */
 public interface DishStoreEditable extends DishStore {
 
-    /** Add dish to store if possible.
+    /** Create a dish in the store if possible.
      *
-     * If dish cannot be add because it violates some "unique"-
+     * If dish cannot be created because it violates some "unique"-
      * constraint (e.g. this dish-name is already used), then
      * dish is not added and `false` is returned.
      *
-     * @param dish  Definition of dish to add to the store.
+     * @param name      See {@link Dish#name()}
+     * @param publicId  See {@link Dish#publicId()}
+     * @param suitableForMealTimes  See {@link Dish#suitableForMealTimes()}
      *
-     * @return  {@code true} if dish was successfully added.
-     *          {@code false} if some "unique"-constraint was
-     *           violated and thus the dish was not added
+     * @return  Dish object representing created dish,
+     *          if it was successfully created.
+     *          {@code Optional.empty()} if some "unique"-constraint was
+     *           violated and thus the dish was not created
      *           (e.g. another dish with this name already
      *           exists. Later another constraints may be
-     *           added to the model). If dish was not added
+     *           added to the model). If dish was not created
      *           because another problem happened, exception
      *           will be thrown (implementation specific).
      */
-    boolean add(final Dish dish);
+    Optional<Dish> create(
+            final String publicId,
+            final String name,
+            final Set<MealTime> suitableForMealTimes
+            );
 
-    /** Remove dish from store, if possible.
+    /** Delete dish identified by name from store, if possible.
+     *
+     * <p>Note, that {@link #deleteByStrongId(UUID)} identifies dish
+     * more reliably</p>
      *
      * @param name   name of the dish to be removed from store.
-     * @return   {@link RemoveStatus#SUCCESS}, if dish was removed,
-     *           {@link RemoveStatus#DOES_NOT_EXIST}, if dish with given name
+     * @return   {@link DeleteStatus#SUCCESS}, if dish was removed,
+     *           {@link DeleteStatus#DOES_NOT_EXIST}, if dish with given name
      *           does not exist, and
-     *           {@link RemoveStatus#USED_IN_MENU_TIMELINE}, if dish cannot
+     *           {@link DeleteStatus#USED_IN_MENU_TIMELINE}, if dish cannot
      *           be deleted because it is used in menu timeline store.
      *           If dish cannot be deleted because of some other reason,
      *           some exception will be thrown (implementation specific).
      */
-    RemoveStatus removeByName(final String name);
+    DeleteStatus deleteByName(final String name);
 
-    /** Remove dish from store, if possible.
+    /** Delete dish identified by its public id from store, if possible.
+     *
+     * <p>Note, that {@link #deleteByStrongId(UUID)} identifies dish
+     * more reliably</p>
      *
      * @param publicId   public id of the dish to be removed from store.
-     * @return   {@link RemoveStatus#SUCCESS}, if dish was removed,
-     *           {@link RemoveStatus#DOES_NOT_EXIST}, if dish with given name
+     * @return   {@link DeleteStatus#SUCCESS}, if dish was removed,
+     *           {@link DeleteStatus#DOES_NOT_EXIST}, if dish with given name
      *           does not exist, and
-     *           {@link RemoveStatus#USED_IN_MENU_TIMELINE}, if dish cannot
+     *           {@link DeleteStatus#USED_IN_MENU_TIMELINE}, if dish cannot
      *           be deleted because it is used in menu timeline store.
      *           If dish cannot be deleted because of some other reason,
      *           some exception will be thrown (implementation specific).
      */
-    RemoveStatus removeById(final String publicId);
+    DeleteStatus deleteByPublicId(final String publicId);
+
+    /** Delete dish identified by its strong id from store, if possible.
+     *
+     * Note, that it is the most reliable way of deletion in the sense,
+     * that it is not possible, that dish with this strong id was already
+     * deleted and then another one was created (because strong id is
+     * unique within the store, - no repetitions are allowed even after
+     * deletion).
+     *
+     * @param strongId   strong id of the dish to be removed from store.
+     * @return   {@link DeleteStatus#SUCCESS}, if dish was removed,
+     *           {@link DeleteStatus#DOES_NOT_EXIST}, if dish with given name
+     *           does not exist, and
+     *           {@link DeleteStatus#USED_IN_MENU_TIMELINE}, if dish cannot
+     *           be deleted because it is used in menu timeline store.
+     *           If dish cannot be deleted because of some other reason,
+     *           some exception will be thrown (implementation specific).
+     */
+    DeleteStatus deleteByStrongId(final UUID strongId);
+
+    /**
+     * Convenience (default) method to delete dish by it's object.
+     *
+     * Strong ID is used to identify the dish object.
+     *
+     * @param dish  Dish to be deleted.
+     * @return See {@link #deleteByStrongId(UUID)}
+     */
+    default DeleteStatus delete(final Dish dish) {
+        return deleteByStrongId(dish.strongId());
+    }
 
     /**
      * Using this method it is possible to change some parameters of the dish.
@@ -111,7 +159,7 @@ public interface DishStoreEditable extends DishStore {
      */
     UpdateStatus updateDish(final DishModified newDishVersion);
 
-    enum RemoveStatus {
+    enum DeleteStatus {
         /** Dish was successfully removed. */
         SUCCESS,
         /** Dish was not removed, because it does not exist. */

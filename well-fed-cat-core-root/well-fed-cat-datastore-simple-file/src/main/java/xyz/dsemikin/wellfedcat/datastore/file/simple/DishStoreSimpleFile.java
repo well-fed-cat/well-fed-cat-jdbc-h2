@@ -3,10 +3,13 @@ package xyz.dsemikin.wellfedcat.datastore.file.simple;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishModified;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datastore.inmemory.DishStoreInMemory;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 public class DishStoreSimpleFile implements DishStoreEditable {
 
@@ -38,27 +41,31 @@ public class DishStoreSimpleFile implements DishStoreEditable {
     }
 
     @Override
-    public boolean add(Dish dish) {
-        final boolean result = storeImpl().add(dish);
-        storeObjectsProvider.writeStoreObjectsToFile();
-        return result;
+    public Optional<Dish> create(String publicId, String name, Set<MealTime> suitableForMealTimes) {
+        // TODO
+        throw new RuntimeException("Not Implemented Yet");
     }
 
     @Override
-    public RemoveStatus removeByName(String name) {
-        final RemoveStatus status = storeImpl().removeByName(name);
+    public DeleteStatus deleteByName(String name) {
+        final DeleteStatus status = storeImpl().deleteByName(name);
         storeObjectsProvider.writeStoreObjectsToFile();
         return status;
     }
 
     @Override
-    public RemoveStatus removeById(String publicId) {
+    public DeleteStatus deleteByPublicId(String publicId) {
         Optional<Dish> maybeDish = getById(publicId);
         if (maybeDish.isPresent()) {
-            return removeByName(maybeDish.get().name());
+            return deleteByName(maybeDish.get().name());
         } else {
-            return RemoveStatus.DOES_NOT_EXIST;
+            return DeleteStatus.DOES_NOT_EXIST;
         }
+    }
+
+    @Override
+    public DeleteStatus deleteByStrongId(UUID strongId) {
+        return null;
     }
 
     @Override

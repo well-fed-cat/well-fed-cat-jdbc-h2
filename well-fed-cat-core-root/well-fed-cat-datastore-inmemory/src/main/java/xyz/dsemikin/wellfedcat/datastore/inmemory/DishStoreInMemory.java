@@ -3,6 +3,7 @@ package xyz.dsemikin.wellfedcat.datastore.inmemory;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishModified;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.utils.Utils;
 
 import java.io.Serial;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class DishStoreInMemory
@@ -48,28 +51,30 @@ public class DishStoreInMemory
     }
 
     @Override
-    public boolean add(Dish dish) {
-        if (dishes.containsKey(dish.name()) || getById(dish.publicId()).isPresent()) {
-            return false;
-        }
-        dishes.put(dish.name(), dish);
-        return true;
+    public Optional<Dish> create(String publicId, String name, Set<MealTime> suitableForMealTimes) {
+        // TODO
+        throw new RuntimeException("Not Implemented Yet");
     }
 
     @Override
-    public RemoveStatus removeByName(String name) {
+    public DeleteStatus deleteByName(String name) {
         Dish removedDish = dishes.remove(name);
-        return removedDish == null ? RemoveStatus.DOES_NOT_EXIST : RemoveStatus.SUCCESS;
+        return removedDish == null ? DeleteStatus.DOES_NOT_EXIST : DeleteStatus.SUCCESS;
     }
 
     @Override
-    public RemoveStatus removeById(String publicId) {
+    public DeleteStatus deleteByPublicId(String publicId) {
         final Optional<Dish> maybeDish = getById(publicId);
         if (maybeDish.isPresent()) {
-            return removeByName(maybeDish.get().name());
+            return deleteByName(maybeDish.get().name());
         } else {
-            return RemoveStatus.DOES_NOT_EXIST;
+            return DeleteStatus.DOES_NOT_EXIST;
         }
+    }
+
+    @Override
+    public DeleteStatus deleteByStrongId(UUID strongId) {
+        return null;
     }
 
     @Override

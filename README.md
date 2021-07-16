@@ -12,6 +12,19 @@ for end-users.
 
 ## TODO ##
 
+* Learn in Gradle how to manage dependencies from different repositories
+  and how to create maven artifacts.
+* Learn about gradle and java modules.
+* Extract "datamodel" module as separate repo (can use subtree)
+* Continue work on refactoring of "datamodel" module.
+* Extract in-memory implementation into separate repo. Make multi-submodule common.
+* Repair in memory implementation
+* Complete test-suite for datamodel and data stores and make sure,
+  it works for in-memory implementation.
+* Extract simple-file implementation as separate repo.
+* Repair simple-file implementation and make sure, all tests work.
+* Extract SQL-DB implementation into separate repo.
+* Repair SQL-DB implementation. Make sure all tests work.
 * Implement automated tests.
   * Implement them for all store-implementations.
   * Create spec of how stores should work together.

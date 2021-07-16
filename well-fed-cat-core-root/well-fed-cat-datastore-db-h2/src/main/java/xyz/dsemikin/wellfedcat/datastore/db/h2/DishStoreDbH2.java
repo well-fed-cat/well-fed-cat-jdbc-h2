@@ -3,11 +3,14 @@ package xyz.dsemikin.wellfedcat.datastore.db.h2;
 import xyz.dsemikin.wellfedcat.datamodel.Dish;
 import xyz.dsemikin.wellfedcat.datamodel.DishModified;
 import xyz.dsemikin.wellfedcat.datamodel.DishStoreEditable;
+import xyz.dsemikin.wellfedcat.datamodel.MealTime;
 import xyz.dsemikin.wellfedcat.datamodel.StoreException;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @SuppressWarnings("ClassCanBeRecord")
 public class DishStoreDbH2 implements
@@ -43,16 +46,13 @@ public class DishStoreDbH2 implements
     }
 
     @Override
-    public boolean add(final Dish dish) {
-        try {
-            return dishDao.add(dish);
-        } catch (SQLException e) {
-            throw new StoreException("Failed to add dish.", e);
-        }
+    public Optional<Dish> create(String publicId, String name, Set<MealTime> suitableForMealTimes) {
+        // TODO
+        throw new RuntimeException("Not Implemented yet");
     }
 
     @Override
-    public RemoveStatus removeByName(final String name) {
+    public DeleteStatus deleteByName(final String name) {
         try {
             return dishDao.removeByName(name);
         } catch (SQLException e) {
@@ -61,12 +61,17 @@ public class DishStoreDbH2 implements
     }
 
     @Override
-    public RemoveStatus removeById(String publicId) {
+    public DeleteStatus deleteByPublicId(String publicId) {
         try {
             return dishDao.removeById(publicId);
         } catch (SQLException e) {
             throw new StoreException("Failed to remote dish", e);
         }
+    }
+
+    @Override
+    public DeleteStatus deleteByStrongId(UUID strongId) {
+        return null;
     }
 
     @Override
