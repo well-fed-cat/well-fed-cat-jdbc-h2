@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':well-fed-cat-datamodel')
+    implementation 'xyz.dsemikin:well-fed-cat-datamodel:1.0-SNAPSHOT'
 
     implementation "com.h2database:h2:1.4.200"
 

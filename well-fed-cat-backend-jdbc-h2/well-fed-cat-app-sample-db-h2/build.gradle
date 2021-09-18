@@ -10,9 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation project(':well-fed-cat-utils')
-    implementation project(':well-fed-cat-datamodel')
-    implementation project(':well-fed-cat-core')
+    implementation 'xyz.dsemikin:well-fed-cat-utils:1.0-SNAPSHOT'
+    implementation 'xyz.dsemikin:well-fed-cat-datamodel:1.0-SNAPSHOT'
+    implementation 'xyz.dsemikin:well-fed-cat-core:1.0-SNAPSHOT'
+
     implementation project(':well-fed-cat-datastore-db-h2')
 }
 
