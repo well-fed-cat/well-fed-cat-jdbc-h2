@@ -1,0 +1,3 @@
+[submodule "well-fed-cat-core-components"]
+	path = well-fed-cat-core-components
+	url = git@github.com:well-fed-cat/well-fed-cat-core-components.git
